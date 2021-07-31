@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"> 
+<head th:replace="/fragments/header.html :: header">
 <title>Insert title here</title>
 </head>
 <body>
-hello im index
+	<nav th:replace="/fragments/nav.html :: nav"></nav>
+	hello im index
+	<footer th:replace="/fragments/footer.html :: footer"></footer>
 </body>
 </html>
