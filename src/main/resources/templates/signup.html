@@ -4,9 +4,38 @@
       layout:decorator="~{layout/layout.html}">
 
 <th:block layout:fragment="content">
-	<div>
+	<div class="mx-5">
 	    <div class="row container-fluid">
-	        signupPage
+	        <div class="mx-5">
+	    <div class="text-center">
+	        <img src="/image/app_icon.png"
+	        	width="150" height="150">
+	        <form>
+	        	<h2>FreeMarket계정생성</h2>
+	        	<br>
+	       		<div>
+				    <label>이메일</label><br>
+				    <small class="text-muted">이메일주소 1개당 계정 1개 입니다.</small>
+				    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+				</div>
+				
+				<div>
+				    <label>패스워드</label>
+				    <br>
+				    <small class="text-muted">6~15개의 문자, 숫자, 특수문자가 허용됩니다.</small>
+				    <input type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+				</div>
+				<div>
+				    <label>패스워드확인</label>
+				    <br>
+				    <small class="text-muted">패스워드를 똑같이 입력해주세요.</small>
+				    <input type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+				</div>
+				<br>
+				<button type="submit" class="btn btn-primary">FreeMarket계정생성</button>
+	        </form>
+	    </div>
+    </div>
 	    </div>
     </div>
 </th:block>
