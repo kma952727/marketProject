@@ -1,12 +1,21 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:th="http://www.thymeleaf.org"> 
-<head th:replace="/fragments/header.html :: header">
-<title>Insert title here</title>
-</head>
-<body>
-	<nav th:replace="/fragments/nav.html :: nav"></nav>
-	hello im index
-	<footer th:replace="/fragments/footer.html :: footer"></footer>
-</body>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="~{layout/layout.html}">
+
+<th:block layout:fragment="content">
+	<div>
+	    <div class="row container-fluid">
+	        <h2 class="m-3">당신을 위한 물건</h2>
+	        
+	        <div class="card" style="width: 18rem;">
+			  <img src="..." class="card-img-top" alt="...">
+			  <div class="card-body">
+			  	<p class="card-text">판매물건 목록..</p>
+			  </div>
+			</div>
+			
+	    </div>
+    </div>
+</th:block>
 </html>
