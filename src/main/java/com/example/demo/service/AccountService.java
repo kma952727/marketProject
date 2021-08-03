@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.mapper.AccountMapper;
 import com.example.demo.model.Account;
+import com.example.demo.model.form.RegisterForm;
 
 @Service
 @Transactional
@@ -22,5 +23,10 @@ public class AccountService {
 	}
 	public void insertAccount(Account account) {
 		accountMapper.insert(account.getName(), account.getPassword(), account.getMail());
+	}
+	public void register(Account account) {
+		accountMapper.insert(account.getName(), 
+				account.getPassword(), 
+				account.getMail());
 	}
 }

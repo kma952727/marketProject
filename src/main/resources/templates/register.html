@@ -10,20 +10,27 @@
 	    <div class="text-center">
 	        <img src="/image/app_icon.png"
 	        	width="150" height="150">
-	        <form>
-	        	<h2>FreeMarket계정생성</h2>
+	        <form th:action="@{/register}" method="post" th:object="${registerForm}">
+	        	<h2>FreeMarket에 가입하세요.</h2>
 	        	<br>
+	        	<div>
+				    <label>이름</label><br>
+				    <small class="text-muted">영문, 숫자 3~15자내로 입력해주세요.</small>
+				    <input type="text" class="form-control" 
+				    	th:field="*{name}" id="exampleInputEmail1" aria-describedby="emailHelp">
+				</div>
 	       		<div>
 				    <label>이메일</label><br>
 				    <small class="text-muted">이메일주소 1개당 계정 1개 입니다.</small>
-				    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+				    <input type="email" class="form-control" 
+				    	th:field="*{mail}" id="exampleInputEmail1" aria-describedby="emailHelp">
 				</div>
-				
 				<div>
 				    <label>패스워드</label>
 				    <br>
 				    <small class="text-muted">6~15개의 문자, 숫자, 특수문자가 허용됩니다.</small>
-				    <input type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+				    <input type="password" class="form-control" 
+				    	th:field="*{password}" id="exampleInputEmail1" aria-describedby="emailHelp">
 				</div>
 				<div>
 				    <label>패스워드확인</label>
