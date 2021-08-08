@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.demo.config.SHA256Util;
 import com.example.demo.mapper.AccountMapper;
 import com.example.demo.model.Account;
 import com.example.demo.model.form.RegisterForm;
@@ -14,6 +15,7 @@ import com.example.demo.model.form.RegisterForm;
 public class AccountService {
 
 	@Autowired private AccountMapper accountMapper;
+	@Autowired private SHA256Util sha256Util;
 	
 	public Account getAccountById(int id) {
 		return accountMapper.selectById(id);
@@ -21,12 +23,8 @@ public class AccountService {
 	public Account getAccountByName(String name) {
 		return accountMapper.selectByName(name);
 	}
-	public void insertAccount(Account account) {
-		accountMapper.insert(account.getName(), account.getPassword(), account.getMail());
-	}
 	public void register(Account account) {
-		accountMapper.insert(account.getName(), 
-				account.getPassword(), 
-				account.getMail());
+		String encryPassword = sha256Util.encrypt(account.getPassword());
+		accountMapper.insert(account.getName(), encryPassword, account.getMail());
 	}
 }
