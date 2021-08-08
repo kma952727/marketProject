@@ -38,7 +38,7 @@ public class MyBatisTest {
 		account.setPassword("123");
 		account.setMail("2323@2424.com");
 		
-		accountService.insertAccount(account);
+		accountService.register(account);
 		
 		Account getAccount = accountService.getAccountByName(NAME);
 		assertThat(getAccount.getName()).isEqualTo(NAME);
