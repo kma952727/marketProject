@@ -19,4 +19,8 @@
 		INSERT INTO account (name, password, mail)
 		VALUES (#{name},#{password}, #{mail});
 	</insert>
+	<select id="selectPasswordByName" resultType="String">
+		select password from account where
+		name = #{name};
+	</select>
 </mapper>

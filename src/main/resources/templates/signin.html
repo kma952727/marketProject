@@ -9,15 +9,15 @@
 	        <img src="/image/app_icon.png"
 	        	width="150" height="150">
 	        <h2>반가워요. FreeMarket입니다.</h2>
-	        <form>
+	        <form th:action="@{/signin}" method="post" th:object="${signinForm}">
 	       		<div>
-				    <label for="exampleInputEmail1" class="form-label">이메일</label>
-				    <input type="email" class="form-control" 
+				    <label for="exampleInputEmail1" class="form-label">아이디</label>
+				    <input type="text" class="form-control" th:field="*{name}"
 				    	id="exampleInputEmail1" aria-describedby="emailHelp">
 				</div>
 				<div>
 				    <label for="exampleInputEmail1" class="form-label">패스워드</label>
-				    <input type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+				    <input type="password" th:field="*{password}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
 				</div>
 				<br>
 				<div>
