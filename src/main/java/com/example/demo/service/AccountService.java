@@ -2,10 +2,10 @@ package com.example.demo.service;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.config.SHA256Util;
 import com.example.demo.mapper.AccountMapper;
 import com.example.demo.model.Account;
 import com.example.demo.model.form.RegisterForm;
@@ -15,7 +15,7 @@ import com.example.demo.model.form.RegisterForm;
 public class AccountService {
 
 	@Autowired private AccountMapper accountMapper;
-	@Autowired private SHA256Util sha256Util;
+	@Autowired private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	public Account getAccountById(int id) {
 		return accountMapper.selectById(id);
@@ -24,7 +24,7 @@ public class AccountService {
 		return accountMapper.selectByName(name);
 	}
 	public void register(Account account) {
-		String encryPassword = sha256Util.encrypt(account.getPassword());
+		String encryPassword = bCryptPasswordEncoder.encode(account.getPassword());
 		accountMapper.insert(account.getName(), encryPassword, account.getMail());
 	}
 }
