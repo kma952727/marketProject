@@ -28,12 +28,12 @@ public class AccountService {
 		String encryPassword = bCryptPasswordEncoder.encode(account.getPassword());
 		accountMapper.insert(account.getName(), encryPassword, account.getMail());
 	}
-	public boolean signin(SigninForm signinForm) {
-		String encodedPassword = accountMapper.selectPasswordByName(signinForm.getName());
-		boolean passwordCheck = bCryptPasswordEncoder.matches(signinForm.getPassword(), encodedPassword);
-		if(passwordCheck) 
-			return true;
-		else
-			return false;
-	}
+//	public boolean signin(SigninForm signinForm) {
+//		String encodedPassword = accountMapper.selectPasswordByName(signinForm.getName());
+//		boolean passwordCheck = bCryptPasswordEncoder.matches(signinForm.getPassword(), encodedPassword);
+//		if(passwordCheck) 
+//			return true;
+//		else
+//			return false;
+//	}
 }

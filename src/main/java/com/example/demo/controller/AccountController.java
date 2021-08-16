@@ -27,8 +27,8 @@ public class AccountController {
 	}
 	@PostMapping("/signin")
 	public String signin(SigninForm signinForm) {
-		boolean signinCheck = accountService.signin(signinForm);
-		if(signinCheck) log.info("signin!!");
+//		boolean signinCheck = accountService.signin(signinForm);
+//		if(signinCheck) log.info("signin!!");
 		return "redirect:/";
 	}
 	@GetMapping("/register")

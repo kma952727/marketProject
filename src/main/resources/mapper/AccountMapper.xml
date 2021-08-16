@@ -11,7 +11,7 @@
 		WHERE account_id = #{id}
 	</select>
 	<select id="selectByName" resultType="com.example.demo.model.Account">
-		SELECT account_id, name, password, mail
+		SELECT *
 		FROM account
 		WHERE name = #{name}
 	</select>

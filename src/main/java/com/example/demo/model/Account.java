@@ -1,5 +1,11 @@
 package com.example.demo.model;
 
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.thymeleaf.standard.expression.Each;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,11 +20,16 @@ public class Account {
 	private String name;
 	private String password;
 	private String mail;
+	private Boolean enabled;
+	
+	private Collection<? extends GrantedAuthority> authorities;
+
 	
 	public static class Builder{
 		private String name = "noName";
 		private String password = "noPassword";
 		private String mail ="noMail";
+		private Boolean enabled;
 		
 		public Builder setName(String val) {
 			name = val;
@@ -32,18 +43,23 @@ public class Account {
 			mail = val;
 			return this;
 		}
+		public Builder setEnabled(Boolean val) {
+			enabled = val;
+			return this;
+		}
 		public Account build() {
 			Account account = 
-					new Account(name, password, mail);
+					new Account(name, password, mail, enabled);
 			return account;
 		}	
 	}
 	
 	private Account(String name, String password,
-			String mail) {
+			String mail, Boolean enabled) {
 		this.name = name;
 		this.password = password;
 		this.mail = mail;
+		this.enabled = enabled;
 	}
 	
 }
