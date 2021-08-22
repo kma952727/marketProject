@@ -16,12 +16,16 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
-
+	
+	@Autowired private UserDetailsService userdetailsService;
+	@Autowired private DataSource dataSource;
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder(10);
@@ -43,6 +47,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.logoutSuccessUrl("/")
 			.invalidateHttpSession(true)
 			.deleteCookies("JSESSIONID");
+		http
+			.rememberMe()
+			.rememberMeParameter("remember-me")
+			.userDetailsService(userdetailsService)
+			.tokenRepository(getJDBCRepository());
+	}
+	@Bean
+	public PersistentTokenRepository getJDBCRepository() {
+		JdbcTokenRepositoryImpl repo = new JdbcTokenRepositoryImpl();
+		repo.setDataSource(dataSource);
+		return repo;
 	}
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -57,10 +72,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	public AuthenticationSuccessHandler successHandler() {
 		return new CustomAuthenticationSuccessHandler();
 	}
-	
-//	@Override
-//	protected UserDetailsService userDetailsService() {
-//		return new UserDetailServiceImpl();
-//				
-//	}
 }
