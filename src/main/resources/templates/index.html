@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="~{layout/layout.html}">
+	xmlns:sec ="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="~{layout/layout.html}">
 
 <th:block layout:fragment="content">
 	<div>
 	    <div class="row container-fluid">
 	        <h2 class="m-3">당신을 위한 물건</h2>
-	        
 	        <div class="card" style="width: 18rem;">
 			  <img src="..." class="card-img-top" alt="...">
 			  <div class="card-body">

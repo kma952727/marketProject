@@ -13,8 +13,7 @@ public class MainController {
 
 	@GetMapping("/")
 	public String main() {
-		String name = (String)SecurityContextHolder.getContext().getAuthentication().getName();
-		log.info("인증+"+name);
+		String name = (String)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		return "index";
 	}
 }

@@ -38,6 +38,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.formLogin()
 			.loginPage("/signin")
 			.successHandler(successHandler());
+		http
+			.logout()
+			.logoutSuccessUrl("/")
+			.invalidateHttpSession(true)
+			.deleteCookies("JSESSIONID");
 	}
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
