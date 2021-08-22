@@ -17,7 +17,7 @@ import lombok.ToString;
 public class Account {
 	
 	private Long id;
-	private String name;
+	private String username;
 	private String password;
 	private String mail;
 	private Boolean enabled;
@@ -56,7 +56,7 @@ public class Account {
 	
 	private Account(String name, String password,
 			String mail, Boolean enabled) {
-		this.name = name;
+		this.username = name;
 		this.password = password;
 		this.mail = mail;
 		this.enabled = enabled;

@@ -26,7 +26,7 @@ public class AccountService {
 	}
 	public void register(Account account) {
 		String encryPassword = bCryptPasswordEncoder.encode(account.getPassword());
-		accountMapper.insert(account.getName(), encryPassword, account.getMail());
+		accountMapper.insert(account.getUsername(), encryPassword, account.getMail());
 	}
 //	public boolean signin(SigninForm signinForm) {
 //		String encodedPassword = accountMapper.selectPasswordByName(signinForm.getName());

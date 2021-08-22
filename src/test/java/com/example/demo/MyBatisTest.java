@@ -34,14 +34,14 @@ public class MyBatisTest {
 	@Test
 	public void isConnected_Mapper_interface() {
 		Account account = new Account();
-		account.setName(NAME);
+		account.setUsername(NAME);
 		account.setPassword("123");
 		account.setMail("2323@2424.com");
 		
 		accountService.register(account);
 		
 		Account getAccount = accountService.getAccountByName(NAME);
-		assertThat(getAccount.getName()).isEqualTo(NAME);
+		assertThat(getAccount.getUsername()).isEqualTo(NAME);
 		
 	}
 }

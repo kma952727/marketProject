@@ -25,12 +25,7 @@ public class AccountController {
 		model.addAttribute("signinForm", new SigninForm());
 		return "signin";
 	}
-	@PostMapping("/signin")
-	public String signin(SigninForm signinForm) {
-//		boolean signinCheck = accountService.signin(signinForm);
-//		if(signinCheck) log.info("signin!!");
-		return "redirect:/";
-	}
+	
 	@GetMapping("/register")
 	public String register_view(Model model) {
 		model.addAttribute(new RegisterForm());
