@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -45,7 +46,7 @@ public class AccountController {
 		return "register";
 	}
 	@PostMapping("/register")
-	public String register(RegisterForm registerForm) {
+	public String register(RegisterForm registerForm) throws MessagingException {
 
 		Account account = new Account.Builder()
 				.setName(registerForm.getName())

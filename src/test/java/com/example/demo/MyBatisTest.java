@@ -2,6 +2,8 @@ package com.example.demo;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import javax.mail.MessagingException;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.jupiter.api.DisplayName;
@@ -32,7 +34,7 @@ public class MyBatisTest {
 	
 	@DisplayName("insert + select")
 	@Test
-	public void isConnected_Mapper_interface() {
+	public void isConnected_Mapper_interface() throws MessagingException {
 		Account account = new Account();
 		account.setUsername(NAME);
 		account.setPassword("123");

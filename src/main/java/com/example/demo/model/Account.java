@@ -21,7 +21,7 @@ public class Account {
 	private String password;
 	private String mail;
 	private Boolean enabled;
-	
+	private Boolean isEmailverified;
 	private Collection<? extends GrantedAuthority> authorities;
 
 	

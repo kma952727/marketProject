@@ -13,14 +13,17 @@
 	<select id="selectByName" resultType="com.example.demo.model.Account">
 		SELECT *
 		FROM account
-		WHERE name = #{name}
+		WHERE name = #{username}
 	</select>
 	<insert id="insert">
-		INSERT INTO account (name, password, mail)
-		VALUES (#{name},#{password}, #{mail});
+		INSERT INTO account (name, password, mail, auth_key)
+		VALUES (#{username},#{password}, #{mail}, #{authKey});
+	</insert>
+	<insert id="insertAuthKey">
+		insert into account (auth_key) values (#{authKey}) where name = #{username};
 	</insert>
 	<select id="selectPasswordByName" resultType="String">
 		select password from account where
-		name = #{name};
+		name = #{username};
 	</select>
 </mapper>

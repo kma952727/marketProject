@@ -12,7 +12,8 @@ import com.example.demo.model.Account;
 public interface AccountMapper {
 
 	public Account selectById(int id);
-	public Account selectByName(String name);
-	public String selectPasswordByName(String name);
-	public void insert(String name, String password, String mail);
+	public Account selectByName(String username);
+	public String selectPasswordByName(String username);
+	public void insert(String username, String password, String mail, String authKey);
+	public void insertAuthKey(String authKey, String username);
 }
