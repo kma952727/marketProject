@@ -31,10 +31,20 @@ public class AccountService {
 		return accountMapper.selectByName(name);
 	}
 	public void register(Account account) throws MessagingException {
+		String username = account.getUsername();
 		String encryPassword = bCryptPasswordEncoder.encode(account.getPassword());
-		String authKey = simpleEmailServiceImpl.sendMail("kma952727@gmail.com");
-		String useranme = account.getUsername();
-		accountMapper.insert(useranme, encryPassword, account.getMail(), authKey);
+		String authKey = simpleEmailServiceImpl.sendMail("kma952727@gmail.com", username);
+		accountMapper.insert(username, encryPassword, account.getMail(), authKey);
+	}
+	public void emailConfirm(String username, String authKey) {
+		String originalKey = accountMapper.getAuthKey(username);
+		log.info(username+" / "+authKey + "/" + originalKey);
+		if(originalKey.equals(authKey)) {
+			log.info("키값 동일");
+			accountMapper.IsEmailVerified(username);
+		}else {
+			log.info("비동일");
+		}
 	}
 
 }

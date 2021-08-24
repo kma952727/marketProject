@@ -19,14 +19,19 @@ public class SimpleEmailServiceImpl {
 	@Autowired private MailKeyGenerator mailKeyGenerator;
 	private String authKey;
 	
-	public String sendMail(String to) throws MessagingException {
+	public String sendMail(String to, String username) throws MessagingException {
 		authKey = mailKeyGenerator.getKey(50, false);
+		String body = "<html>"
+				+ "<body><h1>링크를 클릭해서 인증해주세요.</h1>" +
+				"<a href='http://localhost:8080/emailConfirm?username="
+				+username+"&authKey="+authKey+"'>인증링크!</a> "
+						+ "<body>"
+						+ "</html>";
 		MimeMessage message = javaMailSender.createMimeMessage();
 		message.setSubject("이메일 인증 메일");
 		message.setRecipient(Message.RecipientType.TO, 
 				new InternetAddress(to));
-		message.setText("<h1>링크를 클릭해서 인증해주세요.</h1>" +
-				"<a herf='http://localhost:8080/emailVerified?username=tmpUser&authKey='"+authKey+"</a>");
+		message.setContent(body, "text/html;charset=UTF-8");
 		message.setFrom("FreeMarket");
 		message.setSentDate(new Date());
 		javaMailSender.send(message);

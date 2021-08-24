@@ -11,6 +11,7 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.model.Account;
@@ -54,6 +55,12 @@ public class AccountController {
 				.setMail(registerForm.getMail())
 				.build();
 		accountService.register(account);
+		return "redirect:/";
+	}
+	@GetMapping("/emailConfirm")
+	public String email_confirm(String username, String authKey) {
+		log.info("confirm!");
+		accountService.emailConfirm(username, authKey);
 		return "redirect:/";
 	}
 }

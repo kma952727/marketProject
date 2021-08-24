@@ -16,4 +16,6 @@ public interface AccountMapper {
 	public String selectPasswordByName(String username);
 	public void insert(String username, String password, String mail, String authKey);
 	public void insertAuthKey(String authKey, String username);
+	public String getAuthKey(String username);
+	public void IsEmailVerified(String username);
 }

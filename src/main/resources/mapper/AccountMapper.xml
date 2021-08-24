@@ -22,6 +22,12 @@
 	<insert id="insertAuthKey">
 		insert into account (auth_key) values (#{authKey}) where name = #{username};
 	</insert>
+	<update id="IsEmailVerified">
+		update account set isEmail_verified = 1 where name = #{username};
+	</update>
+	<select id="getAuthKey" resultType="String">
+		select auth_key from account where name = #{username}
+	</select>
 	<select id="selectPasswordByName" resultType="String">
 		select password from account where
 		name = #{username};
