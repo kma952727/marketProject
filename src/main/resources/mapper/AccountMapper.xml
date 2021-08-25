@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.demo.mapper.AccountMapper">
 	
@@ -11,25 +12,25 @@
 		WHERE account_id = #{id}
 	</select>
 	<select id="selectByName" resultType="com.example.demo.model.Account">
-		SELECT *
+		SELECT username, password, mail, isEmail_verified as isEmailverified
 		FROM account
-		WHERE name = #{username}
+		WHERE username = #{username}
 	</select>
 	<insert id="insert">
-		INSERT INTO account (name, password, mail, auth_key)
-		VALUES (#{username},#{password}, #{mail}, #{authKey});
+		INSERT INTO account (username, password, mail, auth_key)
+		VALUES (#{username},#{password}, #{mail}, #{authKey})
 	</insert>
 	<insert id="insertAuthKey">
-		insert into account (auth_key) values (#{authKey}) where name = #{username};
+		insert into account (auth_key) values (#{authKey}) where username = #{username}
 	</insert>
 	<update id="IsEmailVerified">
-		update account set isEmail_verified = 1 where name = #{username};
+		update account set isEmail_verified = 1 where username = #{username}
 	</update>
 	<select id="getAuthKey" resultType="String">
-		select auth_key from account where name = #{username}
+		select auth_key from account where username = #{username}
 	</select>
 	<select id="selectPasswordByName" resultType="String">
 		select password from account where
-		name = #{username};
+		username = #{username}
 	</select>
 </mapper>
