@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
@@ -14,7 +15,9 @@ import lombok.ToString;
 
 @Getter @Setter @ToString
 @NoArgsConstructor @AllArgsConstructor
-public class Account {
+public class Account implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	
 	private Long id;
 	private String username;
