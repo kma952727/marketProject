@@ -3,17 +3,23 @@ package com.example.demo.controller;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.demo.config.validate.RegisterValidator;
 import com.example.demo.model.Account;
 import com.example.demo.model.form.RegisterForm;
 import com.example.demo.model.form.SigninForm;
@@ -23,10 +29,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
-@RequiredArgsConstructor
 public class AccountController {
 
-	private final AccountService accountService;
+	@Autowired private AccountService accountService;
+	@Autowired private RegisterValidator registerValidator;
+	
+	@InitBinder("registerForm")
+	public void initBinder(WebDataBinder webDataBinder) {
+		webDataBinder.addValidators(registerValidator);
+	}
 	
 	@GetMapping("/signin")
 	public String signin_view(Model model) {
@@ -47,8 +58,11 @@ public class AccountController {
 		return "register";
 	}
 	@PostMapping("/register")
-	public String register(RegisterForm registerForm) throws MessagingException {
-
+	public String register(@Valid RegisterForm registerForm,
+			BindingResult bindingResult) throws MessagingException {
+		if(bindingResult.hasErrors()) {
+			return "register";
+		}
 		Account account = new Account.Builder()
 				.setName(registerForm.getName())
 				.setPassword(registerForm.getPassword())

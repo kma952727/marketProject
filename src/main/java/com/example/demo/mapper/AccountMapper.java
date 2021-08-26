@@ -22,4 +22,5 @@ public interface AccountMapper {
 	public Account selectAccountOneColumn(String column, String username);
 	public void updateAccountOneColumn(String column, LocalDateTime value,
 			String username);
+	public Integer existsRegisterInfo(String column, String value);
 }

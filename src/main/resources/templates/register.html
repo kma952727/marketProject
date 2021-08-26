@@ -17,13 +17,21 @@
 				    <label>이름</label><br>
 				    <small class="text-muted">영문, 숫자 3~15자내로 입력해주세요.</small>
 				    <input type="text" class="form-control" 
-				    	th:field="*{name}" id="exampleInputEmail1" aria-describedby="emailHelp">
+				    	th:field="*{name}" id="exampleInputEmail1" aria-describedby="emailHelp">	
+					</br>
+					<div class="alert alert-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" role="alert">
+						nameError
+					</div>
 				</div>
 	       		<div>
 				    <label>이메일</label><br>
 				    <small class="text-muted">이메일주소 1개당 계정 1개 입니다.</small>
 				    <input type="email" class="form-control" 
 				    	th:field="*{mail}" id="exampleInputEmail1" aria-describedby="emailHelp">
+					</br>
+					<div class="alert alert-danger" th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}" role="alert">
+						mailError
+					</div>
 				</div>
 				<div>
 				    <label>패스워드</label>
@@ -31,6 +39,10 @@
 				    <small class="text-muted">6~15개의 문자, 숫자, 특수문자가 허용됩니다.</small>
 				    <input type="password" class="form-control" 
 				    	th:field="*{password}" id="exampleInputEmail1" aria-describedby="emailHelp">
+					</br>
+					<div class="alert alert-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}" role="alert">
+						passwordError
+					</div>
 				</div>
 				<div>
 				    <label>패스워드확인</label>

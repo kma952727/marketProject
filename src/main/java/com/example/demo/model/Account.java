@@ -7,6 +7,10 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.thymeleaf.standard.expression.Each;
 
