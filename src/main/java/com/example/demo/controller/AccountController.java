@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.model.Account;
 import com.example.demo.model.form.RegisterForm;
@@ -59,8 +60,15 @@ public class AccountController {
 	}
 	@GetMapping("/emailConfirm")
 	public String email_confirm(String username, String authKey) {
-		log.info("confirm!");
+		log.info("confirm!"+ authKey);
 		accountService.emailConfirm(username, authKey);
+		return "redirect:/";
+	}
+	@GetMapping("/emailSend/{username}")
+	public String email_send(@PathVariable String username,
+			RedirectAttributes redirectAttributes) throws MessagingException {
+		accountService.email_send(username);
+		redirectAttributes.addAttribute("isSend", "send");
 		return "redirect:/";
 	}
 }

@@ -17,9 +17,15 @@
 		FROM account
 		WHERE username = #{username}
 	</select>
+	<select id="selectAccountOneColumn" resultType="com.example.demo.model.Account">
+		select ${column} from account where username = #{username}
+	</select>
+	<update id="updateAccountOneColumn">
+		update account set ${column} = #{value} where username = #{username}
+	</update>
 	<insert id="insert">
-		INSERT INTO account (username, password, mail, auth_key)
-		VALUES (#{username},#{password}, #{mail}, #{authKey})
+		INSERT INTO account (username, password, mail, mail_send_time, auth_key)
+		VALUES (#{username},#{password}, #{mail}, #{mailSendTime}, #{authKey})
 	</insert>
 	<insert id="insertAuthKey">
 		insert into account (auth_key) values (#{authKey}) where username = #{username}
@@ -27,7 +33,7 @@
 	<update id="IsEmailVerified">
 		update account set isEmail_verified = 1 where username = #{username}
 	</update>
-	<select id="getAuthKey" resultType="String">
+	<select id="selectAuthKey" resultType="String">
 		select auth_key from account where username = #{username}
 	</select>
 	<select id="selectPasswordByName" resultType="String">

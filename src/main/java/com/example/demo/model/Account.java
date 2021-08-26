@@ -1,7 +1,10 @@
 package com.example.demo.model;
 
 import java.io.Serializable;
+
+import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -25,9 +28,10 @@ public class Account implements Serializable{
 	private String mail;
 	private Boolean enabled;
 	private Boolean isEmailverified;
+	private LocalDateTime mailSendTime;
+	private String authKey;
 	private Collection<? extends GrantedAuthority> authorities;
 
-	
 	public static class Builder{
 		private String name = "noName";
 		private String password = "noPassword";
