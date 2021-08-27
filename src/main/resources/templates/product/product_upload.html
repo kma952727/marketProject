@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec ="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="~{layout/layout.html}">
+
+<th:block layout:fragment="content">
+	<div>
+	    <div class="row container-fluid">
+	    	<h2>상품을 올려주세요.</h2><br><br><br>
+	        <form th:action="@{/register}" method="post" th:object="${productForm}">
+	        	<div>
+				    <label>상품명</label>
+				    <small class="text-muted">(영문, 숫자 5 ~ 20자내로 입력해주세요.)</small>
+				    <input type="text" class="form-control" 
+				    	th:field="*{name}" id="exampleInputEmail1" aria-describedby="emailHelp">	
+				</div>
+				</br>
+	       		<div>
+				    <label>판매 가격</label>&nbsp;
+				    <small class="text-muted">(이후 변경할수있습니다.)</small>
+				    <input type="email" class="form-control" 
+				    	th:field="*{price}" id="exampleInputEmail1" aria-describedby="emailHelp">
+				</div>
+				</br>
+				<div>
+				    <label>설명</label>&nbsp;
+				    <small class="text-muted">(5~50개의 문자, 숫자, 특수문자가 허용됩니다.)</small>
+					<div class="form-floating">
+					  <textarea class="form-control" placeholder="Leave a comment here" 
+					  th:field="*{description}" id="floatingTextarea2" style="height: 100px"></textarea>
+					</div>    
+				</div>
+				</br>
+				<div>
+				    <label>재고 수량</label>&nbsp;			    
+				    <small class="text-muted">(판매가능 개수를 기입해주세요.)</small>
+				  	<input type="password" class="form-control" 
+				    	th:field="*{num}" id="exampleInputEmail1" aria-describedby="emailHelp"> 
+				</div>
+				</br>
+				<div>
+					<label>종료일자</label>&nbsp;
+					<small class="text-muted">(설정일자에 자동으로 판매가 종료됩니다.)</small>
+					<div class="input-group">
+					  <span class="input-group-text">년/월/일</span>
+					  <input type="text" name="year" class="form-control" placeholder="1922">
+					  <input type="text" name="month" class="form-control" placeholder="07">
+					  <input type="text" name="day" class="form-control" placeholder="31">
+					</div>
+				</div>
+				</br>
+				<div>
+					<label>휴대폰 번호</label>&nbsp;
+					<small class="text-muted">(판매페이지에 등록됩니다.)</small>
+					<input type="password" class="form-control" 
+				    	th:field="*{phoneNumber}" id="exampleInputEmail1" aria-describedby="emailHelp"> 
+				</div>
+				<br>
+				<div>
+					<div class="mb-3">
+					  <label for="formFile" class="form-label">대표 상품사진</label>
+					  <input class="form-control" type="file" id="formFile">
+					</div>
+				</div>
+				
+				<div>
+					<div class="mb-3">
+					  <label for="formFile" class="form-label">상품사진</label>
+					  <input class="form-control" type="file" id="formFile">
+					</div>
+				</div>
+				
+				<div class="mb-3">
+					<label>카테고리</label> <br><br>
+				
+					<div class="form-check form-check-inline">
+					  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+					  <label class="form-check-label" for="inlineRadio1">가전제품</label>
+					</div>
+					<div class="form-check form-check-inline">
+					  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+					  <label class="form-check-label" for="inlineRadio2">잡화</label>
+					</div>
+					<div class="form-check form-check-inline">
+					  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+					  <label class="form-check-label" for="inlineRadio3">의류</label>
+					</div>
+					<div class="form-check form-check-inline">
+					  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+					  <label class="form-check-label" for="inlineRadio3">식품</label>
+					</div>
+					<div class="form-check form-check-inline">
+					  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+					  <label class="form-check-label" for="inlineRadio3">운동</label>
+					</div>
+					<div class="form-check form-check-inline">
+					  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+					  <label class="form-check-label" for="inlineRadio3">주방</label>
+					</div>
+				</div>
+				<br>
+				<button type="submit" class="btn btn-primary">상품올리기</button>
+	        </form>
+	    </div>
+    </div>
+</th:block>
+</html>

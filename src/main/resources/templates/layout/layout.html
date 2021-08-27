@@ -7,12 +7,16 @@
 			<div class="col-sm-8 col-md-12">
 				<th:block th:replace="/layout/fragments/nav :: nav"/>
 			</div>
-			<div class="row">
-				<div class="col">
-					<th:block th:replace="/layout/fragments/categori :: categori"/>
-				</div>
-				<div class="col">
-					<th:block layout:fragment="content"></th:block>
+			<div>
+				<div class="row">
+					<div class="col-md-2">
+						<th:block th:replace="/layout/fragments/categori :: categori"/>
+					</div>
+					<div class="col-md-1">
+					</div>
+					<div class="col-md-8">
+						<th:block layout:fragment="content"></th:block>
+					</div>
 				</div>
 			</div>
 		</div>

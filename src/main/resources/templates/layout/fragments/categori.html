@@ -1,10 +1,57 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="categori">
-	<div class="bg-light">
-		<div class="container-fluid">
-    		카테고리
-  		</div>
-	</div>
+	<div class="d-flex flex-column flex-shrink-0 p-3" style="width: 280px;">
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+      <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+      <span class="fs-4">카테고리</span>
+    </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item">
+        <a href="#" class="nav-link active" aria-current="page">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
+          홈
+        </a>
+      </li>
+      <li>
+        <a href="#" class="nav-link link-dark">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
+       	  가전제품
+        </a>
+      </li>
+      <li>
+        <a href="#" class="nav-link link-dark">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
+          잡화
+        </a>
+      </li>
+      
+      <li>
+        <a href="#" class="nav-link link-dark">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
+          의류
+        </a>
+      </li>
+      <li>
+        <a href="#" class="nav-link link-dark">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
+          식품
+        </a>
+      </li>
+      <li>
+        <a href="#" class="nav-link link-dark">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
+          운동
+        </a>
+      </li>
+      <li>
+        <a href="#" class="nav-link link-dark">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
+          주방
+        </a>
+      </li>
+    </ul>
+  </div>
 </th:block>
 </html>
