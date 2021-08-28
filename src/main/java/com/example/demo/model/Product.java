@@ -9,14 +9,15 @@ import lombok.ToString;
 
 @Data @ToString
 public class Product {
-
+	
+	private int ProductId;
 	private String name;
 	private int price;
 	private String type;
 	private String description;
 	private int num;
 	private int phoneNumber;
-	private LocalDateTime uploadTime;
+	private LocalDateTime uploadTime = LocalDateTime.now();
 	private LocalDateTime endTime;
 	private MultipartFile[] productImages;
 	private String serverImageName;
@@ -30,7 +31,7 @@ public class Product {
 		private String description;
 		private int num;
 		private int phoneNumber;
-		private LocalDateTime uploadTime = LocalDateTime.now();
+		private LocalDateTime uploadTime;
 		private LocalDateTime endTime;
 		private MultipartFile[] productImages;
 		private String serverImageName;

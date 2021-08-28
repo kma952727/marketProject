@@ -4,7 +4,46 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.mapper.ProductMapper">
-	<insert id="insertProduct">
-	
+	<insert id="insertProduct" useGeneratedKeys="true" keyProperty="id" >
+		INSERT into PRODUCT (
+			name,
+		    price,
+		    type,
+		    description,
+		    num,
+		    upload_time,
+		    end_time,
+		    phone_number
+		) value (
+			#{name},
+			#{price},
+			#{type},
+			#{description},
+			#{num},
+			#{uploadTime},
+			#{endTime},
+			#{phoneNumber}
+		)
+		<selectKey resultType="int" keyProperty="productId" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	<insert id="insertProductImage">
+		
+        INSERT INTO product_image (
+            product_id,
+           	original_image_name,
+           	server_image_name,
+           	size
+        )
+        VALUES
+        <foreach item="item" collection="list" separator=",">
+        (
+            #{productId},
+            #{item.originalImageName},
+            #{item.serverImageName},
+            #{item.size}         
+        )
+        </foreach>
 	</insert>
 </mapper>

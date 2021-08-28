@@ -24,6 +24,7 @@ import com.example.demo.config.FileUtils;
 import com.example.demo.config.security.CustomUser;
 import com.example.demo.model.Account;
 import com.example.demo.model.Product;
+import com.example.demo.model.ProductImage;
 import com.example.demo.model.Account.Builder;
 import com.example.demo.model.Product.ProductBuilder;
 import com.example.demo.model.form.ProductForm;
@@ -39,7 +40,7 @@ public class ProductController {
 	
 	@Autowired AccountService accountService;
 	@Autowired ProductService productService;
-	@Autowired FileUtils FileUtils;
+	@Autowired FileUtils fileUtils;
 	
 	@GetMapping("/upload")
 	public String upload_product_view(@AuthenticationPrincipal CustomUser user, Model model) {
@@ -56,11 +57,12 @@ public class ProductController {
 			@RequestParam("file") MultipartFile[] file, ProductForm productForm, 
 			Model model) {
 		Account account = null;
+		String[] imageNames;
 		if(user != null) {
 			account = accountService.getAccountByName(user.getAccount().getUsername());
 			model.addAttribute("account", account);
 		}
-		LocalDateTime endTime = FileUtils.StringToDate(productForm.getEndTime());
+		LocalDateTime endTime = StringToDate(productForm.getEndTime());
 		Product product = new ProductBuilder().setName(account.getUsername())
 				.setPrice(productForm.getPrice())
 				.setType(productForm.getType())
@@ -70,9 +72,17 @@ public class ProductController {
 				.setPhoneNumber(productForm.getPhoneNumber())
 				.setProductImages(file)
 				.build();
-		productService.upload_product(product);
+		List<ProductImage> productImages = fileUtils.convertImageToModel(file);
+		productService.upload_product(product, productImages);
 		
 		return "index";
 	}
 	
+	private LocalDateTime StringToDate(String StringDate) {
+		String[] imageNames =  StringDate.split("/");
+		LocalDateTime endTime = 
+				LocalDateTime.of(Integer.parseInt(imageNames[0]),
+						Integer.parseInt(imageNames[1]), Integer.parseInt(imageNames[2]), 0, 0, 0);
+		return endTime;
+	}
 }
