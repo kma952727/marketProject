@@ -10,10 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.example.demo.config.FileUtils;
 import com.example.demo.config.mail.SimpleEmailServiceImpl;
 import com.example.demo.mapper.AccountMapper;
 import com.example.demo.model.Account;
+import com.example.demo.model.Product;
 import com.example.demo.model.form.RegisterForm;
 import com.example.demo.model.form.SigninForm;
 

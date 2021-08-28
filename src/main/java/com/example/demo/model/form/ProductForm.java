@@ -2,16 +2,22 @@ package com.example.demo.model.form;
 
 import java.time.LocalDateTime;
 
-import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
-@Data
+import lombok.Data;
+import lombok.ToString;
+
+@Data @ToString
 public class ProductForm {
 
 	private String name;
-	private String price;
+	private int price;
 	private String type;
 	private String description;
 	private int num;
 	private int phoneNumber;
-	private LocalDateTime endTime;
+	private String endTime;
+	private MultipartFile productImages;
+	
 }
