@@ -4,24 +4,31 @@ import java.time.LocalDateTime;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@Data @ToString
+@Data @ToString 
+@AllArgsConstructor
+@NoArgsConstructor
 public class Product {
 	
-	private int ProductId;
+	private Integer productId;
 	private String name;
-	private int price;
+	private Integer price;
 	private String type;
 	private String description;
-	private int num;
-	private int phoneNumber;
+	private Integer num;
+	private Integer phoneNumber;
+	private Integer rating;
 	private LocalDateTime uploadTime = LocalDateTime.now();
 	private LocalDateTime endTime;
 	private MultipartFile[] productImages;
+	private Integer productImageId;
 	private String serverImageName;
 	private String originalImageName;
+	private Integer size;
 	
 	public static class ProductBuilder {
 		
@@ -36,6 +43,7 @@ public class Product {
 		private MultipartFile[] productImages;
 		private String serverImageName;
 		private String originalImageName;
+		private int size;
 		
 		public ProductBuilder setName(String name) {
 			this.name = name;
@@ -87,5 +95,24 @@ public class Product {
 			this.phoneNumber = phoneNumber;
 			this.endTime = endTime;
 			this.productImages = productImages;
+	}
+	public Product(Integer productId, String name, Integer price, String type,
+			String description, Integer num, Integer rating, LocalDateTime uploadTime,
+			LocalDateTime endTime, Integer phoneNumber, Integer productImageId,
+			String originalImageName, String serverImageName, Integer size) {
+			this.productId = productId;
+			this.name = name;
+			this.price = price;
+			this.type = type;
+			this.description = description;
+			this.num = num;
+			this.rating = rating;
+			this.uploadTime = uploadTime;
+			this.endTime = endTime;
+			this.phoneNumber = phoneNumber;
+			this.productImageId = productImageId;
+			this.originalImageName = originalImageName;
+			this.serverImageName = serverImageName;
+			this.size = size;
 	}
 }

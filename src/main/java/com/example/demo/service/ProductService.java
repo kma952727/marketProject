@@ -23,4 +23,10 @@ public class ProductService {
 		productMapper.insertProduct(product);
 		productMapper.insertProductImage(productImages, product.getProductId());
 	}
+	
+	public List<Product> getProductList(int index, int[] option){
+		List<Product> productList
+			= productMapper.selectProducts(index);
+		return productList;
+	}
 }

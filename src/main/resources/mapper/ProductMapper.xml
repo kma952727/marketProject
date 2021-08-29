@@ -46,4 +46,13 @@
         )
         </foreach>
 	</insert>
+	<select id="selectProducts" resultType="com.example.demo.model.Product">
+		SELECT  A.name, B.server_image_name, A.rating
+		  FROM product A, (
+			SELECT MAX(product_id), product_id, server_image_name
+			FROM product_image
+			GROUP BY product_id, server_image_name
+		) B
+		group by A.product_id, B.server_image_name having MAX(B.product_id) limit 10
+	</select>
 </mapper>

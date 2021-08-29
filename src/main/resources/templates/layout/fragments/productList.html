@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="~{layout/layout.html}">
+<th:block th:fragment="list">
+	<div th:each="product : ${productList}">
+		<div class="row gx-5">
+			<div class="col-2" >
+				<img th:src="${product.serverImageName}">
+			</div>
+			<div class="col-9">	
+					<div class="col" th:text="${product.name}">
+						상품명입니다. 상품명기입을 안하셨습니다.
+					</div>
+					<div class="col">
+						<div class="row">
+							<div class="col-2" th:text="${'평점:' + product.rating}">
+								rating
+							</div>
+						</div>
+					</div>
+			</div>
+		</div>
+	</div>
+</th:block>

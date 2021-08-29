@@ -63,7 +63,8 @@ public class ProductController {
 			model.addAttribute("account", account);
 		}
 		LocalDateTime endTime = StringToDate(productForm.getEndTime());
-		Product product = new ProductBuilder().setName(account.getUsername())
+		Product product = new ProductBuilder()
+				.setName(productForm.getName())
 				.setPrice(productForm.getPrice())
 				.setType(productForm.getType())
 				.setDescription(productForm.getDescription())

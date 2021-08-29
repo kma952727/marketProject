@@ -16,4 +16,5 @@ public interface ProductMapper {
 	public void insertProduct(Product product);
 	public void insertProductImage(@Param("list") List<ProductImage> list, 
 			@Param("productId") int proudctId);
+	public List<Product> selectProducts(int id);
 }

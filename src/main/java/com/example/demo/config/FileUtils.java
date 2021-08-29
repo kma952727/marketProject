@@ -10,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,18 +24,17 @@ import lombok.extern.slf4j.Slf4j;
 public class FileUtils {
 	
 	private static final String UPLOADPATH = "/Users/cat95/Documents/workspace-spring-tool-suite-4-4.10.0.RELEASE"
-			+ "/MarketProject/src/main/resources/static/product_image";
+			+ "/MarketProject/src/main/resources/static/product_image/";
 
 	public List<ProductImage> convertImageToModel(MultipartFile[] images) {
 		List<ProductImage> productImages = new ArrayList<ProductImage>();
 		for(MultipartFile image : images) {
 			ProductImage productImage = new ProductImage();
 			String originalName = image.getOriginalFilename();
+			String serverName = UUID.randomUUID().toString().replace("-", "") + originalName;
 			productImage.setOriginalImageName(image.getOriginalFilename());
 			productImage.setSize(image.getSize());
-			productImage.setServerImageName(
-					originalName.substring(
-							originalName.lastIndexOf("."), originalName.length()));
+			productImage.setServerImageName(UPLOADPATH + serverName);
 			productImages.add(productImage);
 		}
 		return productImages;
@@ -49,7 +49,7 @@ public class FileUtils {
 				for(MultipartFile image : files) {
 					fileName = image.getOriginalFilename();
 					byte[] bytes = image.getBytes();
-					File file = new File(UPLOADPATH + "/" +fileName);
+					File file = new File(UPLOADPATH +fileName);
 					out = new FileOutputStream(file);
 					out.write(bytes);
 				}
