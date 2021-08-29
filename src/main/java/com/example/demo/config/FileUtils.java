@@ -25,7 +25,8 @@ public class FileUtils {
 	
 	private static final String UPLOADPATH = "/Users/cat95/Documents/workspace-spring-tool-suite-4-4.10.0.RELEASE"
 			+ "/MarketProject/src/main/resources/static/product_image/";
-
+	private static final String DEVELOP_UPLOADPATH="/product_image/";
+	
 	public List<ProductImage> convertImageToModel(MultipartFile[] images) {
 		List<ProductImage> productImages = new ArrayList<ProductImage>();
 		for(MultipartFile image : images) {
@@ -34,22 +35,25 @@ public class FileUtils {
 			String serverName = UUID.randomUUID().toString().replace("-", "") + originalName;
 			productImage.setOriginalImageName(image.getOriginalFilename());
 			productImage.setSize(image.getSize());
-			productImage.setServerImageName(UPLOADPATH + serverName);
+			productImage.setServerImageName(DEVELOP_UPLOADPATH + serverName);
 			productImages.add(productImage);
 		}
 		return productImages;
 	}
-	public void saveFileToDisk(MultipartFile[] files) {
+	public void saveFileToDisk(MultipartFile[] files, List<ProductImage> imageList) {
 		
 		OutputStream out = null;
 		PrintWriter printWriter = null;
 		String fileName;
-
+		int count = 0;
+		
 			try {
-				for(MultipartFile image : files) {
-					fileName = image.getOriginalFilename();
+				for(MultipartFile image : files) { 
+					ProductImage imageVO = imageList.get(count++);
+					String realPath = imageVO.getServerImageName().replaceAll(DEVELOP_UPLOADPATH, UPLOADPATH);
+							
 					byte[] bytes = image.getBytes();
-					File file = new File(UPLOADPATH +fileName);
+					File file = new File(realPath);
 					out = new FileOutputStream(file);
 					out.write(bytes);
 				}

@@ -53,6 +53,7 @@
 			FROM product_image
 			GROUP BY product_id, server_image_name
 		) B
+		where A.product_id = B.product_id
 		group by A.product_id, B.server_image_name having MAX(B.product_id) limit 10
 	</select>
 </mapper>

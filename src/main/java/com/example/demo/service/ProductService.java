@@ -19,7 +19,7 @@ public class ProductService {
 	@Autowired private FileUtils fileUtils;
 	
 	public void upload_product(Product product, List<ProductImage> productImages) {
-		fileUtils.saveFileToDisk(product.getProductImages());
+		fileUtils.saveFileToDisk(product.getProductImages(), productImages);
 		productMapper.insertProduct(product);
 		productMapper.insertProductImage(productImages, product.getProductId());
 	}
