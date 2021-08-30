@@ -24,9 +24,16 @@ public class ProductService {
 		productMapper.insertProductImage(productImages, product.getProductId());
 	}
 	
-	public List<Product> getProductList(int index, int[] option){
+	public List<Product> getProductList(int index, String type){
+
+		log.info("type명"+type);
 		List<Product> productList
-			= productMapper.selectProducts(index);
+			= productMapper.selectProducts(index, type);
 		return productList;
 	}
+	
+	public Product getProduct(int productId) {
+		return productMapper.selectProductById(productId);
+	}
+
 }

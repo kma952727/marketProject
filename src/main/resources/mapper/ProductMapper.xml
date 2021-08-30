@@ -4,6 +4,24 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.mapper.ProductMapper">
+	<resultMap type="com.example.demo.model.Product" id="product_image_result">
+		<result property="name" column="name"/>
+		<result property="price" column="price"/>
+		<result property="type" column="type"/>
+		<result property="description" column="description"/>
+		<result property="num" column="num"/>
+		<result property="rating" column="rating"/>
+		<result property="uploadTime" column="upload_time"/>
+		<result property="endTime" column="end_time"/>
+		<result property="phoneNumber" column="phone_number"/>
+		<result property="productId" column="product_id"/>
+		<collection property="productImageList" column="product_id" javaType="java.util.ArrayList"
+			ofType="com.example.demo.model.ProductImage" select="getProductImages" ></collection>
+	</resultMap>
+	<select id="getProductImages" resultType="com.example.demo.model.ProductImage">
+		select * from product_image where product_id = #{productId}
+	</select>
+	
 	<insert id="insertProduct" useGeneratedKeys="true" keyProperty="id" >
 		INSERT into PRODUCT (
 			name,
@@ -13,7 +31,8 @@
 		    num,
 		    upload_time,
 		    end_time,
-		    phone_number
+		    phone_number,
+		    account_id
 		) value (
 			#{name},
 			#{price},
@@ -22,7 +41,8 @@
 			#{num},
 			#{uploadTime},
 			#{endTime},
-			#{phoneNumber}
+			#{phoneNumber},
+			#{accountId}
 		)
 		<selectKey resultType="int" keyProperty="productId" order="AFTER">
 			SELECT LAST_INSERT_ID()
@@ -47,13 +67,18 @@
         </foreach>
 	</insert>
 	<select id="selectProducts" resultType="com.example.demo.model.Product">
-		SELECT  A.name, B.server_image_name, A.rating
-		  FROM product A, (
-			SELECT MAX(product_id), product_id, server_image_name
-			FROM product_image
-			GROUP BY product_id, server_image_name
-		) B
-		where A.product_id = B.product_id
-		group by A.product_id, B.server_image_name having MAX(B.product_id) limit 10
+		select 
+			A.product_id, A.name, B.server_image_name, A.price, A.rating, A.type 
+		from
+	 		product A, product_image B 
+	 	where
+	 		<if test="type != 'all'">A.type = #{type} and</if> A.product_id = B.product_id group by A.product_id
+	 	order by 
+	 		A.product_id desc 
+	 	limit 10;
+ 	</select>
+	<select id="selectProductById" resultMap="product_image_result">
+		select * from product where product_id = #{productId}
 	</select>
+	
 </mapper>

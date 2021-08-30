@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,10 +26,12 @@ public class Product {
 	private LocalDateTime uploadTime = LocalDateTime.now();
 	private LocalDateTime endTime;
 	private MultipartFile[] productImages;
+	private List<ProductImage> productImageList;
 	private Integer productImageId;
 	private String serverImageName;
 	private String originalImageName;
 	private Integer size;
+	private Long accountId;
 	
 	public static class ProductBuilder {
 		
@@ -44,6 +47,7 @@ public class Product {
 		private String serverImageName;
 		private String originalImageName;
 		private int size;
+		private Long accountId;
 		
 		public ProductBuilder setName(String name) {
 			this.name = name;
@@ -77,16 +81,20 @@ public class Product {
 			this.productImages = productImages;
 			return this;
 		}
+		public ProductBuilder setAccountId(Long accountId) {
+			this.accountId = accountId;
+			return this;
+		}
 		
 		public Product build() {
 			return new Product(this.name, this.price, this.type,
 					this.description, this.num, this.phoneNumber,
-					this.endTime, this.productImages);
+					this.endTime, this.productImages, this.accountId);
 		}
 	}
 	private Product(String name, int price, String type,
 			String description, int num, int phoneNumber,
-			LocalDateTime endTime, MultipartFile[] productImages) {
+			LocalDateTime endTime, MultipartFile[] productImages, Long accountId) {
 			this.name = name;
 			this.price = price;
 			this.type = type;
@@ -95,11 +103,12 @@ public class Product {
 			this.phoneNumber = phoneNumber;
 			this.endTime = endTime;
 			this.productImages = productImages;
+			this.accountId = accountId;
 	}
 	public Product(Integer productId, String name, Integer price, String type,
 			String description, Integer num, Integer rating, LocalDateTime uploadTime,
 			LocalDateTime endTime, Integer phoneNumber, Integer productImageId,
-			String originalImageName, String serverImageName, Integer size) {
+			String originalImageName, String serverImageName, Integer size, Long accountId) {
 			this.productId = productId;
 			this.name = name;
 			this.price = price;
@@ -114,5 +123,6 @@ public class Product {
 			this.originalImageName = originalImageName;
 			this.serverImageName = serverImageName;
 			this.size = size;
+			this.accountId = accountId;
 	}
 }

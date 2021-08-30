@@ -26,7 +26,7 @@ public class Account implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	private Long id;
+	private Long accountId;
 	private String username;
 	private String password;
 	private String mail;
@@ -41,6 +41,7 @@ public class Account implements Serializable{
 		private String password = "noPassword";
 		private String mail ="noMail";
 		private Boolean enabled;
+		private Long accountId;
 		
 		public Builder setName(String val) {
 			name = val;
@@ -58,19 +59,24 @@ public class Account implements Serializable{
 			enabled = val;
 			return this;
 		}
+		public Builder setAccountId(Long val) {
+			accountId = val;
+			return this;
+		}
 		public Account build() {
 			Account account = 
-					new Account(name, password, mail, enabled);
+					new Account(name, password, mail, enabled, accountId);
 			return account;
 		}	
 	}
 	
 	private Account(String name, String password,
-			String mail, Boolean enabled) {
+			String mail, Boolean enabled, Long accountId) {
 		this.username = name;
 		this.password = password;
 		this.mail = mail;
 		this.enabled = enabled;
+		this.accountId = accountId;
 	}
 	
 }
