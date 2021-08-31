@@ -20,6 +20,7 @@
 	<select id="selectAccountOneColumn" resultType="com.example.demo.model.Account">
 		select ${column} from account where username = #{username}
 	</select>
+	
 	<update id="updateAccountOneColumn">
 		update account set ${column} = #{value} where username = #{username}
 	</update>

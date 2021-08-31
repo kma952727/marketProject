@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.BoardMapper">
+	<resultMap type="com.example.demo.model.Board" id="boardList">
+		<result column="board_id" property="boardId"/>
+		<result column="account_id" property="accountId"/>
+		<result column="contents" property="contents"/>
+		<result column="upload_time" property="uploadTime"/>
+		<result column="subject" property="subject"/>
+		<result column="hits" property="hits"/>
+	</resultMap>
+	
+	<insert id="insertBoard">
+		insert into board 
+			(account_id, subject, contents, upload_time, writer)
+		values
+			(#{accountId}, #{subject}, #{contents}, #{uploadTime}, #{writer})
+	</insert>
+	<select id="selectBoards" resultType="com.example.demo.model.Board">
+		select 
+			board_id, subject, hits, upload_time, account_id, writer
+		from board order by board_id desc limit 10
+	</select>
+</mapper>

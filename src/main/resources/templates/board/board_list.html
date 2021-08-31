@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec ="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="~{layout/layout.html}">
+
+<th:block layout:fragment="content">
+	<div>
+	    <div class="row container-fluid">
+	        <h2 class="m-3">자유 게시판</h2>
+	        <div th:each="board : ${boardList}">
+	        	<div class="row">
+		        	<div class="col-9">
+			        	<small><div th:text=${board.boardId}/></small>
+			     
+			        	<h6>
+			        		<a th:href="@{'/board/detail/'+${board.boardId}}">
+			        			<div th:text="${board.subject}"/>
+			        		</a>
+			        	</h6>
+		        	</div>
+		        	<div class="col">
+		        		<div th:text="${'작성자: '+board.writer}"/>
+		        		<small><div th:text="${board.uploadTime}"/></small>
+		        	</div>
+	        	</div>
+	        	<hr>
+	        </div>
+	        <button type="button" class="btn btn-primary" onclick="upload_button_click()">글쓰기</button>
+	    </div>
+    </div>
+    <script>
+    	function upload_button_click(){
+    		location.href = "/board/upload";
+    	}
+    </script>
+</th:block>
+</html>

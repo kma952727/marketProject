@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec ="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="~{layout/layout.html}">
+
+<th:block layout:fragment="content">
+	<div>
+	    <div class="row container-fluid">
+	        <h2 class="m-3">글 작성</h2>
+	        <form th:action="@{/board/upload}" th:object="${boardForm}" method="post">
+	        	<div>
+	        		&nbsp;<label for="exampleFormControlInput1" class="form-label">작성자</label>
+	        		<input type="text" th:value="${account.username}" class="form-control" readonly>
+	        	</div>
+	        	<br>
+	        	<div class="mb-3">	        
+				&nbsp;<label for="exampleFormControlInput1" class="form-label">제목</label>
+					<input type="text" th:field="*{subject}" class="form-control">
+				</div>
+				<div class="mb-3">
+				  &nbsp;<label class="form-label">내용</label>
+				  <textarea class="form-control" th:field="*{contents}" rows="7"></textarea>
+				</div>
+				<button type="submit" class="btn btn-primary">게시글 작성</button>
+			</form>
+	    </div>
+    </div>
+</th:block>
+</html>
