@@ -16,6 +16,8 @@ import com.example.demo.config.security.CustomUser;
 import com.example.demo.model.Account;
 import com.example.demo.model.Board;
 import com.example.demo.model.form.BoardForm;
+import com.example.demo.model.page.Criteria;
+import com.example.demo.model.page.PageMaker;
 import com.example.demo.service.AccountService;
 import com.example.demo.service.BoardService;
 
@@ -30,12 +32,16 @@ public class BoardController {
 	@Autowired BoardService boardService;
 	
 	@GetMapping("/list/{index}")
-	public String boardListView(@AuthenticationPrincipal CustomUser user, Model model, @PathVariable String index) {
+	public String boardListView(@AuthenticationPrincipal CustomUser user, Model model
+			, @PathVariable String index) {
 		if(user != null) {
 			Account account = accountService.getAccountByName(user.getAccount().getUsername());
 			model.addAttribute("account", account);
 		}
-		List<Board> boardList = boardService.getBoardList(index);
+		Criteria criteria = new Criteria(Integer.parseInt(index));
+		List<Board> boardList = boardService.getBoardList(criteria);
+		PageMaker pageMaker = boardService.getPageMaker(criteria);
+		model.addAttribute("pageMaker", pageMaker);
 		model.addAttribute("boardList", boardList);
 		return "board/board_list";
 	}
@@ -63,7 +69,6 @@ public class BoardController {
 		board.setContents(boardForm.getContents());
 		board.setUploadTime(LocalDateTime.now());
 		boardService.uploadBoard(board);
-		log.info("시간체그"+board.getUploadTime());
 		return "redirect:/";
 	}
 }

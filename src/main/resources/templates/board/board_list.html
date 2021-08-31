@@ -26,6 +26,25 @@
 	        	</div>
 	        	<hr>
 	        </div>
+	        <nav aria-label="Page navigation example">
+				<ul class="pagination">
+			    	<li class="page-item"  th:if="${pageMaker.prev}">
+			      		<a class="page-link" href="#" aria-label="Previous">
+			        		<span aria-hidden="true">&laquo;</span>
+			      		</a>
+			    	</li>
+			    	<th:block th:each="num : ${#numbers.sequence(1,pageMaker.endPage)}">
+			    		<li class="page-item">
+			    			<a class="page-link" th:text="${num}" th:href="'/board/list/'+${num}">num</a>
+			    		</li>
+			    	</th:block>
+			    	<li class="page-item" th:if="${pageMaker.next}">
+			      		<a class="page-link" href="#" aria-label="Next">
+			        		<span aria-hidden="true">&raquo;</span>
+			      		</a>
+			    	</li>
+			  	</ul>
+			</nav>
 	        <button type="button" class="btn btn-primary" onclick="upload_button_click()">글쓰기</button>
 	    </div>
     </div>

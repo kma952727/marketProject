@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.mapper.BoardMapper;
 import com.example.demo.model.Board;
+import com.example.demo.model.page.Criteria;
+import com.example.demo.model.page.PageMaker;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,11 +22,15 @@ public class BoardService {
 		boardMapper.insertBoard(board);
 	}
 
-	public List<Board> getBoardList(String index) {
-		
-		List<Board> boardList = boardMapper.selectBoards(index);
-		log.info(boardList.toString());
+	public List<Board> getBoardList(Criteria criteria) {
+		int pageNum = criteria.getPageStart();
+		List<Board> boardList = boardMapper.selectBoards(pageNum);
 		return boardList;
 	}
 
+	public PageMaker getPageMaker(Criteria criteria) {
+		int totalCount = boardMapper.selectTotalCount();
+		PageMaker pageMaker = new PageMaker(totalCount, criteria);
+		return pageMaker;
+	}
 }

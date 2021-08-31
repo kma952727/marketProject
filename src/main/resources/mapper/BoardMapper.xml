@@ -7,6 +7,7 @@
 	<resultMap type="com.example.demo.model.Board" id="boardList">
 		<result column="board_id" property="boardId"/>
 		<result column="account_id" property="accountId"/>
+		<result column="writer" property="writer"/>
 		<result column="contents" property="contents"/>
 		<result column="upload_time" property="uploadTime"/>
 		<result column="subject" property="subject"/>
@@ -22,6 +23,16 @@
 	<select id="selectBoards" resultType="com.example.demo.model.Board">
 		select 
 			board_id, subject, hits, upload_time, account_id, writer
-		from board order by board_id desc limit 10
+		from board order by board_id desc limit #{index},10
+	</select>
+	<select id="testPaging" resultMap="boardList">
+		select 
+			*
+		from
+			board
+		order by board_id desc limit #{pageStart}, #{amount}
+	</select>
+	<select id="selectTotalCount" resultType="int">
+		select count(*) from board;
 	</select>
 </mapper>
