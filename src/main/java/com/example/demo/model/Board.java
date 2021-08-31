@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Data @ToString 
+@Setter @Getter @ToString 
 @AllArgsConstructor
 @NoArgsConstructor
 public class Board {
@@ -25,6 +25,6 @@ public class Board {
 	private String contents;
 	private LocalDateTime uploadTime;
 	private Long hits;
-	
+	List<Comment> commentList;
 	
 }

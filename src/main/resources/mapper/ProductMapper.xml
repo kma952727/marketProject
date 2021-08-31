@@ -15,8 +15,9 @@
 		<result property="endTime" column="end_time"/>
 		<result property="phoneNumber" column="phone_number"/>
 		<result property="productId" column="product_id"/>
-		<collection property="productImageList" column="product_id" javaType="java.util.ArrayList"
-			ofType="com.example.demo.model.ProductImage" select="getProductImages" ></collection>
+		<collection property="productImageList" column="product_id" 
+		ofType="com.example.demo.model.ProductImage" select="getProductImages"></collection>
+		
 	</resultMap>
 	<select id="getProductImages" resultType="com.example.demo.model.ProductImage">
 		select * from product_image where product_id = #{productId}

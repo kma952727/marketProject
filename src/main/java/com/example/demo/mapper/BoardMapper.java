@@ -16,4 +16,7 @@ public interface BoardMapper {
 	public List<Board> selectBoards(int index);
 	public List<Board> testPaging(Criteria criteria);
 	public int selectTotalCount();
+	public Board selectBoard(int index);
+	public void deleteBoard(int index);
+	public void deleteCommentJoinBoard(int index);
 }

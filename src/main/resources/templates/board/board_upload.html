@@ -16,11 +16,12 @@
 	        	<br>
 	        	<div class="mb-3">	        
 				&nbsp;<label for="exampleFormControlInput1" class="form-label">제목</label>
-					<input type="text" th:field="*{subject}" class="form-control">
+					<input type="text" th:name="subject" class="form-control" th:value="${board?.subject}">
 				</div>
 				<div class="mb-3">
 				  &nbsp;<label class="form-label">내용</label>
-				  <textarea class="form-control" th:field="*{contents}" rows="7"></textarea>
+				  <textarea class="form-control" th:name="contents" 
+				  	th:text="${board?.contents}" rows="7"></textarea>
 				</div>
 				<button type="submit" class="btn btn-primary">게시글 작성</button>
 			</form>

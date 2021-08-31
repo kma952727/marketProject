@@ -25,6 +25,14 @@
 			board_id, subject, hits, upload_time, account_id, writer
 		from board order by board_id desc limit #{index},10
 	</select>
+	<select id="selectBoard" resultMap="boardList">
+		select 
+			* 
+		from
+			board
+		where
+    		board_id=#{index};
+	</select>
 	<select id="testPaging" resultMap="boardList">
 		select 
 			*
@@ -35,4 +43,10 @@
 	<select id="selectTotalCount" resultType="int">
 		select count(*) from board;
 	</select>
+	<delete id="deleteBoard">
+		delete from board where board_id = #{index};
+	</delete>
+	<delete id="deleteCommentJoinBoard">
+		delete from comment where board_id = #{index};
+	</delete>
 </mapper>
