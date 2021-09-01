@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.PurchaseMapper">
+	<resultMap id="purchse" type="com.example.demo.model.Purchase">
+		<result column="purchase_id" property="purchaseId"/>
+		<result column="product_id" property="productId"/>
+		<result column="account_id" property="accountId"/>
+		<result column="ammount" property="ammount"/>
+	</resultMap>
+	<insert id="insertPurchase">
+		insert into purchase
+			(product_id, account_id, amount)
+		values
+			(#{productId}, #{accountId}, #{amount})
+	</insert>
+</mapper>

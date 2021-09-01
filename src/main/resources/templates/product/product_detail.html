@@ -13,13 +13,31 @@
     <div>
     	<img th:src="${thumbnailImageName}" width="400"/>
     </div> 
-   	<div class="mb-5" th:text=${product.price+'원'}/>
-    <div class="mb-5">
-    	<a href="/docs/5.1/examples/" class="btn btn-primary btn-lg px-4">구매 하기</a>
-    	<a th:href="@{'/product/like/' + ${productId}}" class="btn btn-success btn-lg px-4">좋아요</a>
+    <div th:if="${product.num > 0}">
+	    <form th:object="${purchaseForm}" th:action="'/purchase/'+${product.productId}" method="post">
+	    <div class="mb-5">
+	    	<button type="submit" class="btn btn-primary btn-lg px-4">구매 하기</button>
+	    	<a th:href="@{'/product/like/' + ${productId}}" class="btn btn-success btn-lg px-4">좋아요</a>
+	    </div>
+	    <div th:if="${isLikeSuccess == false}"class="alert alert-danger" role="alert">
+			`좋아요`는 한 번만 하실 수 있습니다.
+		</div>
+	 		<div class="col-1">
+	  			<input type="text" class="form-control" 
+	  				th:name="amount" id="amount" value="1">
+	   		</div> 		    
+	   		<br>
+	   		<button type="button" id="plusButton" class="btn btn-primary" onclick="plus()">+</button>
+	   		<button type="button" id="minusButton" class="btn btn-primary" onclick="minus()">-</button>
+	   		<div class="mb-5">
+	   			<div>총 금액 :</div> <input type="text" id="price" 
+	   			class="col fw-bold" th:value=${product.price} style="border: none; background: transparent;" readonly>
+	    	</div>
+	    </form>
     </div>
-	<div th:if="${isLikeSuccess == false}"class="alert alert-danger" role="alert">
-		`좋아요`는 한 번만 하실 수 있습니다.
+    <br>
+    <div class="alert alert-danger" th:if="${product.num < 1}" role="alert">
+  		모두 팔렸습니다!
 	</div>
     <br>
     <hr class="col-3 col-md-2 mb-5">
@@ -39,5 +57,34 @@
      	</div>
     </div>
   </main>
+  <script>
+  	/*<![CDATA[*/
+		var price = "[[${product.price}]]";
+  		var totalAmount = "[[${product.num}]]";
+	/*]]*/
+  	function plus(){
+  		let amount = document.getElementById('amount').value;
+	  	if(parseInt(totalAmount) > parseInt(amount)){
+	  		document.getElementById('amount').value++;
+	  		changeAmount("plus");
+	  	}
+  	}
+  	function minus(){
+  		let amount = document.getElementById('amount').value;
+  		if(parseInt(document.getElementById('amount').value) > 1){
+  			document.getElementById('amount').value--;
+  			changeAmount("minus");
+  		}
+  	}
+	function changeAmount(type){
+		if(type=="plus"){
+			document.getElementById('price').value = 
+				parseInt(document.getElementById('price').value) + parseInt(price);
+		}else{
+			document.getElementById('price').value = 
+				parseInt(document.getElementById('price').value) - parseInt(price);
+		}
+	}
+  </script>
 </th:block>
 </html>

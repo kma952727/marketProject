@@ -30,6 +30,7 @@ import com.example.demo.model.ProductImage;
 import com.example.demo.model.Account.Builder;
 import com.example.demo.model.Product.ProductBuilder;
 import com.example.demo.model.form.ProductForm;
+import com.example.demo.model.form.PurchaseForm;
 import com.example.demo.service.AccountService;
 import com.example.demo.service.ProductService;
 
@@ -93,8 +94,10 @@ public class ProductController {
 		Product product = productService.getProduct(productId);
 		productService.countHits(productId);
 		String thumbnailImageName = product.getProductImageList().get(0).getServerImageName();
-		model.addAttribute(product);
+		log.info("numㄱ"+product.getNum());
+		model.addAttribute("product",product);
 		model.addAttribute("thumbnailImageName", thumbnailImageName);
+		model.addAttribute("purchaseForm", new PurchaseForm());
 		return "product/product_detail";
 	}
 	
@@ -106,8 +109,8 @@ public class ProductController {
 			model.addAttribute("account", account);
 		}
 		List<Product> productList = productService.getProductList(index, type);
-		model.addAttribute("productList", productList);
-		
+		if(!productList.isEmpty())
+			model.addAttribute("productList", productList);
 		return "index";
 	}
 	@GetMapping("/search/{keyword}")

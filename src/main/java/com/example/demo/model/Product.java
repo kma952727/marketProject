@@ -24,6 +24,7 @@ public class Product {
 	private Integer num;
 	private Integer phoneNumber;
 	private Integer like;
+	private Integer amount;
 	private LocalDateTime uploadTime = LocalDateTime.now();
 	private LocalDateTime endTime;
 	private MultipartFile[] productImages;

@@ -125,4 +125,28 @@
 				account_id = #{accountId}), 'y')as 
 		result;
 	</select>
+	<update id="updateProductNum">
+		update 
+			product
+		set
+			num = num - ${amount}
+		where
+			product_id = #{productId};		
+	</update>
+	<select id="selectParchase" resultType="com.example.demo.model.Product">
+		select 
+			A.product_id, A.name, C.server_image_name, A.price, A.rating, A.type, A.hits, B.amount
+		from 
+			product A 
+		inner join 
+			purchase B 
+		on 
+			A.product_id = B.product_id
+		inner join 
+			product_image C 
+		on 
+			B.product_id = C.product_id 
+		where 
+			A.account_id= #{account_id}
+	</select>
 </mapper>

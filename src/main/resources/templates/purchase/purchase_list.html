@@ -2,16 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="~{layout/layout.html}">
-<th:block th:fragment="list">
-	<div th:if="${#strings.isEmpty(productList)}">
-		<div class="alert alert-warning d-flex align-items-center" role="alert">
-		  <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-		  <div>
-		  	해당 카테고리의 상품이 없습니다.
-		  </div>
-		</div>
-	</div>
-	<div th:each="product : ${productList}">
+
+	<th:block layout:fragment="content">
+		<h4>구매목록</h4>
+		<br>
+		<div th:each="product : ${productList}">
 		<div class="row border-bottom border-2">	
 			<div class="col-2">
 				<a th:href="@{'/product/'+${product.productId}}"/>
@@ -27,18 +22,17 @@
 				</a>
 				</h5>
 				<div class="col">
-					<div class="col-2" th:text="${'조회수:' + product.hits}">
-							hits
-					</div>
 					<div class="col-2" th:text="${'[' + product.type+ ']'}">
 						type
 					</div>		
 				</div>
 			</div>
 			<div class="col">
+				<div th:text="${'구매수량 : ' + product.amount}"></div>
 				<h6><div th:text="${product.price+'원'}">price</div></h6>
 			</div>
 		</div>
 		<br>
 	</div>
-</th:block>
+	</th:block>
+</html>

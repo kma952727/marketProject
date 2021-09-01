@@ -27,7 +27,7 @@
 							    <div th:text="${account.username}"></div>
 							  </button>
 							  <ul class="dropdown-menu">
-							    <li><a class="dropdown-item" href="#">회원정보</a></li>
+							    <li><a class="dropdown-item" th:href="@{/purchase/list}">구매목록</a></li>
 							    <li><a class="dropdown-item" th:href="@{/product/upload}">상품올리기</a></li>
 							    <li><hr class="dropdown-divider"></li>
 							    <li>

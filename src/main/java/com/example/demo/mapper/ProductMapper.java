@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.demo.model.Product;
 import com.example.demo.model.ProductImage;
+import com.example.demo.model.Purchase;
 
 @Mapper
 @Repository
@@ -22,4 +23,6 @@ public interface ProductMapper {
 	public void countHits(int productId);
 	public void updateProductLike(Long accountId, int index);
 	public String selectProductLike(Long accountId, int productId);
+	public void updateProductNum(Purchase purchase);
+	public List<Product> selectParchase(Long accountId);
 }
