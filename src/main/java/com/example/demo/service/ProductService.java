@@ -27,8 +27,6 @@ public class ProductService {
 	}
 	
 	public List<Product> getProductList(int index, String type){
-
-		log.info("type명"+type);
 		List<Product> productList
 			= productMapper.selectProducts(index, type);
 		return productList;
@@ -36,6 +34,25 @@ public class ProductService {
 	
 	public Product getProduct(int productId) {
 		return productMapper.selectProductById(productId);
+	}
+
+	public void countHits(int productId) {
+		productMapper.countHits(productId);
+		
+	}
+
+	public boolean likeProduct(Long accountId, int index) {
+		log.info("accountid 값"+accountId);
+		String alreayLike = isExistsProductLike(accountId, index);
+		if(alreayLike.equals("y")) {
+			productMapper.updateProductLike(accountId, index);
+			return true;
+		}
+		
+		return false;
+	}
+	private String isExistsProductLike(Long accountId, int productId) {
+		return productMapper.selectProductLike(accountId, productId);
 	}
 
 }

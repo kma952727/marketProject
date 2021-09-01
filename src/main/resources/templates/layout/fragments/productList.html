@@ -20,20 +20,17 @@
 				</a>
 				</h5>
 				<div class="col">
-					<h6><div th:text="${product.price+'원'}">price</div></h6>
-					<div class="col-2" th:text="${'평점:' + product.rating}">
-							rating
-						</div>
-				</div>
-				<div class="col">
-					<div class="row">
-						<div class="col-2" th:text="${'[' + product.type+ ']'}">
-							type
-						</div>
+					<div class="col-2" th:text="${'조회수:' + product.hits}">
+							hits
 					</div>
+					<div class="col-2" th:text="${'[' + product.type+ ']'}">
+						type
+					</div>		
 				</div>
 			</div>
-		
+			<div class="col">
+				<h6><div th:text="${product.price+'원'}">price</div></h6>
+			</div>
 		</div>
 		<br>
 	</div>

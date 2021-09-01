@@ -9,7 +9,7 @@
 	      		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
 	        		<span class="navbar-toggler-icon"></span>
 	      		</button>
-				<form class="d-flex">
+				<form class="d-flex" method="get">
 	          		<input class="form-control me-2" type="search" placeholder="물품입력" aria-label="Search">
 	          		<button class="btn btn-outline-success" type="submit">Search</button>
 	      		</form>
@@ -19,7 +19,6 @@
 	          			<li class="nav-item">
 	            			<a class="nav-link active" aria-current="page" sec:authorize="isAnonymous()" 
 	            				href="/signin">로그인</a>
-	            		
 	          			</li>
 	          			&nbsp;
 	          			<li class="nav-item" sec:authorize="isAuthenticated()">

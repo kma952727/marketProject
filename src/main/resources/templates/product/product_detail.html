@@ -5,8 +5,10 @@
     layout:decorator="~{layout/layout.html}">
 <th:block layout:fragment="content">
 	<main>
-    <h1 th:text="${'상품명 : '+product.name}"></h1>
-    <h5 th:text="${'게시판 번호 : '+product.productId}"></h5>
+    <h1 th:text="${'상품명 : ' + product.name}"></h1>
+    <h5 th:text="${'게시판 번호 : '+ product.productId}"></h5>
+    <div th:text="${'좋아요 : '+ product.like}"></div>
+    <div th:text="${'조회수 : ' + product.hits}"></div>
     <p class="fs-5 col-md-8"></p>
     <div>
     	<img th:src="${thumbnailImageName}" width="400"/>
@@ -14,8 +16,11 @@
    	<div class="mb-5" th:text=${product.price+'원'}/>
     <div class="mb-5">
     	<a href="/docs/5.1/examples/" class="btn btn-primary btn-lg px-4">구매 하기</a>
+    	<a th:href="@{'/product/like/' + ${productId}}" class="btn btn-success btn-lg px-4">좋아요</a>
     </div>
-
+	<div th:if="${isLikeSuccess == false}"class="alert alert-danger" role="alert">
+		`좋아요`는 한 번만 하실 수 있습니다.
+	</div>
     <br>
     <hr class="col-3 col-md-2 mb-5">
 

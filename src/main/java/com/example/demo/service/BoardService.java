@@ -39,7 +39,7 @@ public class BoardService {
 	public Board getBoard(int index) {
 		return boardMapper.selectBoard(index);
 	}
-
+	
 	public void deleteBoard(int index) {
 		boardMapper.deleteCommentJoinBoard(index);
 		boardMapper.deleteBoard(index);

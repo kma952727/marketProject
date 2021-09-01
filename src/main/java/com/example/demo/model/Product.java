@@ -20,9 +20,10 @@ public class Product {
 	private Integer price;
 	private String type;
 	private String description;
+	private Long hits;
 	private Integer num;
 	private Integer phoneNumber;
-	private Integer rating;
+	private Integer like;
 	private LocalDateTime uploadTime = LocalDateTime.now();
 	private LocalDateTime endTime;
 	private MultipartFile[] productImages;
@@ -106,7 +107,7 @@ public class Product {
 			this.accountId = accountId;
 	}
 	public Product(Integer productId, String name, Integer price, String type,
-			String description, Integer num, Integer rating, LocalDateTime uploadTime,
+			String description, Integer num, Integer like, LocalDateTime uploadTime,
 			LocalDateTime endTime, Integer phoneNumber, Integer productImageId,
 			String originalImageName, String serverImageName, Integer size, Long accountId) {
 			this.productId = productId;
@@ -115,7 +116,7 @@ public class Product {
 			this.type = type;
 			this.description = description;
 			this.num = num;
-			this.rating = rating;
+			this.like = like;
 			this.uploadTime = uploadTime;
 			this.endTime = endTime;
 			this.phoneNumber = phoneNumber;

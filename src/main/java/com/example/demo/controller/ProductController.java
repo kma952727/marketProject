@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.config.FileUtils;
 import com.example.demo.config.security.CustomUser;
@@ -85,13 +86,13 @@ public class ProductController {
 	public String productView(@AuthenticationPrincipal CustomUser user, 
 			@PathVariable("productId") int productId, Model model) { 
 		Account account = null;
-		String[] imageNames;
 		if(user != null) {
 			account = accountService.getAccountByName(user.getAccount().getUsername());
 			model.addAttribute("account", account);
 			model.addAttribute(account);
 		}
 		Product product = productService.getProduct(productId);
+		productService.countHits(productId);
 		String thumbnailImageName = product.getProductImageList().get(0).getServerImageName();
 		model.addAttribute(product);
 		model.addAttribute("thumbnailImageName", thumbnailImageName);
@@ -109,6 +110,15 @@ public class ProductController {
 		model.addAttribute("productList", productList);
 		
 		return "index";
+	}
+	@GetMapping("/like/{index}")
+	public String likeProduct(@AuthenticationPrincipal CustomUser user, @PathVariable int index,
+			RedirectAttributes redirectAttributes) {
+		boolean isSuccess = productService.likeProduct(user.getAccount().getAccountId(), index);
+		if(!isSuccess)
+			redirectAttributes.addFlashAttribute("isLikeSuccess", false);
+			
+		return "redirect:/product/"+index;
 	}
 	private LocalDateTime StringToDate(String StringDate) {
 		String[] imageNames =  StringDate.split("/");

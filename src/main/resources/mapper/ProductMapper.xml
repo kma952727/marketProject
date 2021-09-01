@@ -9,8 +9,8 @@
 		<result property="price" column="price"/>
 		<result property="type" column="type"/>
 		<result property="description" column="description"/>
+		<result property="like" column="count(B.product_id)" />
 		<result property="num" column="num"/>
-		<result property="rating" column="rating"/>
 		<result property="uploadTime" column="upload_time"/>
 		<result property="endTime" column="end_time"/>
 		<result property="phoneNumber" column="phone_number"/>
@@ -69,7 +69,7 @@
 	</insert>
 	<select id="selectProducts" resultType="com.example.demo.model.Product">
 		select 
-			A.product_id, A.name, B.server_image_name, A.price, A.rating, A.type 
+			A.product_id, A.name, B.server_image_name, A.price, A.rating, A.type, A.hits
 		from
 	 		product A, product_image B 
 	 	where
@@ -77,9 +77,36 @@
 	 	order by 
 	 		A.product_id desc 
 	 	limit 10;
+	 	
  	</select>
 	<select id="selectProductById" resultMap="product_image_result">
-		select * from product where product_id = #{productId}
+		select 
+			count(B.product_id), A.* from product A 
+		left join
+			product_like B
+		on 
+			A.product_id = B.product_id 
+		where 
+			A.product_id = #{productId};
 	</select>
-	
+	<select id="countHits">
+		update 
+			product 
+		set 
+			hits = hits + 1
+		where 
+			product_id = #{productId}
+	</select>
+	<update id="updateProductLike">
+		insert into 
+			product_like 
+		set 
+			product_id = #{index}, account_id = #{accountId}, is_like = 1;
+	</update>
+	<select id="selectProductLike" resultType="String">
+		select 
+			ifnull((select product_id from product_like where product_id = #{productId} and
+				account_id = #{accountId}), 'y')as 
+		result;
+	</select>
 </mapper>
