@@ -31,6 +31,12 @@ public class ProductService {
 			= productMapper.selectProducts(index, type);
 		return productList;
 	}
+	public List<Product> getProductList(String keyword){
+		log.info("값+"+keyword);
+		List<Product> productList
+			= productMapper.searchProducts(keyword);
+		return productList;
+	}
 	
 	public Product getProduct(int productId) {
 		return productMapper.selectProductById(productId);
@@ -42,7 +48,6 @@ public class ProductService {
 	}
 
 	public boolean likeProduct(Long accountId, int index) {
-		log.info("accountid 값"+accountId);
 		String alreayLike = isExistsProductLike(accountId, index);
 		if(alreayLike.equals("y")) {
 			productMapper.updateProductLike(accountId, index);

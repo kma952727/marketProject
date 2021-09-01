@@ -17,6 +17,7 @@ public interface ProductMapper {
 	public void insertProductImage(@Param("list") List<ProductImage> list, 
 			@Param("productId") int proudctId);
 	public List<Product> selectProducts(int id, String type);
+	public List<Product> searchProducts(String keyword);
 	public Product selectProductById(int productId);
 	public void countHits(int productId);
 	public void updateProductLike(Long accountId, int index);

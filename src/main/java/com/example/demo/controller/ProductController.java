@@ -64,7 +64,6 @@ public class ProductController {
 			model.addAttribute("account", account);
 		}
 		LocalDateTime endTime = StringToDate(productForm.getEndTime());
-		log.info("값추출"+user.getAccount().getAccountId());
 		Product product = new ProductBuilder()
 				.setName(productForm.getName())
 				.setPrice(productForm.getPrice())
@@ -100,7 +99,7 @@ public class ProductController {
 	}
 	
 	@GetMapping("/categori/{type}/{index}")
-	public String catagoriView(@AuthenticationPrincipal CustomUser user, Model model,
+	public String categoriView(@AuthenticationPrincipal CustomUser user, Model model,
 			@PathVariable String type, @PathVariable Integer index) {
 		if(user != null) {
 			Account account = accountService.getAccountByName(user.getAccount().getUsername());
@@ -111,6 +110,19 @@ public class ProductController {
 		
 		return "index";
 	}
+	@GetMapping("/search/{keyword}")
+	public String categoriSearch(@AuthenticationPrincipal CustomUser user, Model model,
+			@PathVariable String keyword) {
+		if(user != null) {
+			Account account = accountService.getAccountByName(user.getAccount().getUsername());
+			model.addAttribute("account", account);
+		}
+		List<Product> productList = productService.getProductList(keyword);
+		model.addAttribute("productList", productList);
+		log.info(productList.toString());
+		return "index";
+	}
+	
 	@GetMapping("/like/{index}")
 	public String likeProduct(@AuthenticationPrincipal CustomUser user, @PathVariable int index,
 			RedirectAttributes redirectAttributes) {

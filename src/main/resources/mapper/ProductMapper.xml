@@ -73,11 +73,27 @@
 		from
 	 		product A, product_image B 
 	 	where
-	 		<if test="type != 'all'">A.type = #{type} and</if> A.product_id = B.product_id group by A.product_id
+	 		<if test="type != 'all'">A.type = #{type} and</if>
+	 		A.product_id = B.product_id group by A.product_id
 	 	order by 
 	 		A.product_id desc 
 	 	limit 10;
 	 	
+ 	</select>
+ 	<select id="searchProducts" resultType="com.example.demo.model.Product">
+ 		select 
+			A.product_id, A.name, B.server_image_name, A.price, A.rating, A.type, A.hits
+		from
+	 		product A, product_image B 
+	 	where
+	 		A.product_id = B.product_id 
+	 	and
+	 		A.name like CONCAT('%',#{keyword},'%')
+	 	group by 
+	 		A.product_id
+	 	order by 
+	 		A.product_id desc 
+	 	limit 10;
  	</select>
 	<select id="selectProductById" resultMap="product_image_result">
 		select 
