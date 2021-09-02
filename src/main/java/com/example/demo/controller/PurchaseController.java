@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.config.security.CustomUser;
 import com.example.demo.model.Account;
+import com.example.demo.model.CurrentAccount;
 import com.example.demo.model.Product;
 import com.example.demo.model.Purchase;
 import com.example.demo.model.form.PurchaseForm;
@@ -30,22 +31,20 @@ public class PurchaseController {
 	@Autowired PurchaseService purchasService;
 	
 	@GetMapping("/list")
-	public String purchaseList(@AuthenticationPrincipal CustomUser user, Model model) {
-		Account account = null;
-		if(user != null) {
-			account = accountService.getAccountByName(user.getAccount().getUsername());
-			model.addAttribute("account", account);
-		}
+	public String purchaseList(@CurrentAccount Account account, Model model) {
+		
+		model.addAttribute("account", account);
+		
 		List<Product> productList = purchasService.getPurchaseList(account.getAccountId());
 		model.addAttribute("productList", productList);
 		return "purchase/purchase_list";
 	}
 	
 	@PostMapping("/{productId}")
-	public String purchase(@AuthenticationPrincipal CustomUser user, PurchaseForm purchaseForm
+	public String purchase(@CurrentAccount Account account, PurchaseForm purchaseForm
 			,@PathVariable int productId) {
 		Purchase purchase = new Purchase();
-		purchase.setAccountId(user.getAccount().getAccountId());
+		purchase.setAccountId(account.getAccountId());
 		purchase.setProductId(productId);
 		purchase.setAmount(purchaseForm.getAmount());
 		purchasService.purchaseProduct(purchase);

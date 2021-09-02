@@ -25,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.demo.config.FileUtils;
 import com.example.demo.config.security.CustomUser;
 import com.example.demo.model.Account;
+import com.example.demo.model.CurrentAccount;
 import com.example.demo.model.Product;
 import com.example.demo.model.ProductImage;
 import com.example.demo.model.Account.Builder;
@@ -46,24 +47,18 @@ public class ProductController {
 	@Autowired FileUtils fileUtils;
 	
 	@GetMapping("/upload")
-	public String upload_product_view(@AuthenticationPrincipal CustomUser user, Model model) {
-		if(user != null) {
-			Account account = accountService.getAccountByName(user.getAccount().getUsername());
-			model.addAttribute("account", account);
-		}
+	public String upload_product_view(@CurrentAccount Account account, Model model) {
+		model.addAttribute("account", account);
 		model.addAttribute("productForm",new ProductForm());
 		return "product/product_upload";
 	}
 	
 	@PostMapping("/upload")
-	public String upload_product(@AuthenticationPrincipal CustomUser user, 
+	public String upload_product(@CurrentAccount Account account, 
 			@RequestParam("file") MultipartFile[] file, ProductForm productForm, 
 			Model model) {
-		Account account = null;
-		if(user != null) {
-			account = accountService.getAccountByName(user.getAccount().getUsername());
-			model.addAttribute("account", account);
-		}
+		model.addAttribute("account", account);
+		
 		LocalDateTime endTime = StringToDate(productForm.getEndTime());
 		Product product = new ProductBuilder()
 				.setName(productForm.getName())
@@ -74,7 +69,7 @@ public class ProductController {
 				.setEndTime(endTime)
 				.setPhoneNumber(productForm.getPhoneNumber())
 				.setProductImages(file)
-				.setAccountId(user.getAccount().getAccountId())
+				.setAccountId(account.getAccountId())
 				.build();
 		List<ProductImage> productImages = fileUtils.convertImageToModel(file);
 		productService.upload_product(product, productImages);
@@ -83,18 +78,14 @@ public class ProductController {
 	}
 	
 	@GetMapping("/{productId}")
-	public String productView(@AuthenticationPrincipal CustomUser user, 
+	public String productView(@CurrentAccount Account account, 
 			@PathVariable("productId") int productId, Model model) { 
-		Account account = null;
-		if(user != null) {
-			account = accountService.getAccountByName(user.getAccount().getUsername());
-			model.addAttribute("account", account);
-			model.addAttribute(account);
-		}
+		
+		model.addAttribute("account", account);
+		
 		Product product = productService.getProduct(productId);
 		productService.countHits(productId);
 		String thumbnailImageName = product.getProductImageList().get(0).getServerImageName();
-		log.info("numㄱ"+product.getNum());
 		model.addAttribute("product",product);
 		model.addAttribute("thumbnailImageName", thumbnailImageName);
 		model.addAttribute("purchaseForm", new PurchaseForm());
@@ -102,24 +93,20 @@ public class ProductController {
 	}
 	
 	@GetMapping("/categori/{type}/{index}")
-	public String categoriView(@AuthenticationPrincipal CustomUser user, Model model,
+	public String categoriView(@CurrentAccount Account account, Model model,
 			@PathVariable String type, @PathVariable Integer index) {
-		if(user != null) {
-			Account account = accountService.getAccountByName(user.getAccount().getUsername());
-			model.addAttribute("account", account);
-		}
+		model.addAttribute("account", account);
+		
 		List<Product> productList = productService.getProductList(index, type);
 		if(!productList.isEmpty())
 			model.addAttribute("productList", productList);
 		return "index";
 	}
 	@GetMapping("/search/{keyword}")
-	public String categoriSearch(@AuthenticationPrincipal CustomUser user, Model model,
+	public String categoriSearch(@CurrentAccount Account account, Model model,
 			@PathVariable String keyword) {
-		if(user != null) {
-			Account account = accountService.getAccountByName(user.getAccount().getUsername());
-			model.addAttribute("account", account);
-		}
+		model.addAttribute("account", account);
+		
 		List<Product> productList = productService.getProductList(keyword);
 		model.addAttribute("productList", productList);
 		log.info(productList.toString());
@@ -127,9 +114,9 @@ public class ProductController {
 	}
 	
 	@GetMapping("/like/{index}")
-	public String likeProduct(@AuthenticationPrincipal CustomUser user, @PathVariable int index,
+	public String likeProduct(@CurrentAccount Account account, @PathVariable int index,
 			RedirectAttributes redirectAttributes) {
-		boolean isSuccess = productService.likeProduct(user.getAccount().getAccountId(), index);
+		boolean isSuccess = productService.likeProduct(account.getAccountId(), index);
 		if(!isSuccess)
 			redirectAttributes.addFlashAttribute("isLikeSuccess", false);
 			

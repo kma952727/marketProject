@@ -16,6 +16,7 @@ import com.example.demo.config.security.CustomUser;
 import com.example.demo.model.Account;
 import com.example.demo.model.Board;
 import com.example.demo.model.Comment;
+import com.example.demo.model.CurrentAccount;
 import com.example.demo.model.form.BoardForm;
 import com.example.demo.model.form.CommentForm;
 import com.example.demo.model.page.Criteria;
@@ -36,12 +37,9 @@ public class BoardController {
 	@Autowired CommentService commentService;
 	
 	@GetMapping("/list/{index}")
-	public String boardListView(@AuthenticationPrincipal CustomUser user, Model model
+	public String boardListView(@CurrentAccount Account account, Model model
 			, @PathVariable String index) {
-		if(user != null) {
-			Account account = accountService.getAccountByName(user.getAccount().getUsername());
-			model.addAttribute("account", account);
-		}
+		model.addAttribute("account", account);
 		Criteria criteria = new Criteria(Integer.parseInt(index));
 		List<Board> boardList = boardService.getBoardList(criteria);
 		PageMaker pageMaker = boardService.getPageMaker(criteria);
@@ -51,24 +49,18 @@ public class BoardController {
 	}
 	
 	@GetMapping("/upload")
-	public String uploadBoardView(@AuthenticationPrincipal CustomUser user, Model model) {
-		if(user != null) {
-			Account account = accountService.getAccountByName(user.getAccount().getUsername());
-			model.addAttribute("account", account);
-		}
+	public String uploadBoardView(@CurrentAccount Account account, Model model) {
+		model.addAttribute("account", account);
 		model.addAttribute("boardForm", new BoardForm());
 		return "board/board_upload";
 	}
 	@PostMapping("/upload")
-	public String uploadBoard(@AuthenticationPrincipal CustomUser user, Model model, BoardForm boardForm) {
-		if(user != null) {
-			Account account = accountService.getAccountByName(user.getAccount().getUsername());
-			model.addAttribute("account", account);
-		}
+	public String uploadBoard(@CurrentAccount Account account, Model model, BoardForm boardForm) {
+		model.addAttribute("account", account);
 
 		Board board = new Board();
-		board.setAccountId(user.getAccount().getAccountId());
-		board.setWriter(user.getAccount().getUsername());
+		board.setAccountId(account.getAccountId());
+		board.setWriter(account.getUsername());
 		board.setSubject(boardForm.getSubject());
 		board.setContents(boardForm.getContents());
 		board.setUploadTime(LocalDateTime.now());
@@ -77,13 +69,9 @@ public class BoardController {
 	}
 	
 	@GetMapping("/detail/{index}")
-	public String boardDetailView(@AuthenticationPrincipal CustomUser user, 
+	public String boardDetailView(@CurrentAccount Account account, 
 			@PathVariable int index, Model model) {
-		Account account = null;
-		if(user != null) {
-			account = accountService.getAccountByName(user.getAccount().getUsername());
-			model.addAttribute("account", account);
-		}
+		model.addAttribute("account", account);
 		Board board = boardService.getBoard(index);
 		List<Comment> commentList = commentService.getComment(index);
 		log.info(commentList.toString());
@@ -99,13 +87,10 @@ public class BoardController {
 		return "redirect:/board/list/1";
 	}
 	@GetMapping("/update/{index}")
-	public String updateBoard(@AuthenticationPrincipal CustomUser user, @PathVariable int index,
+	public String updateBoard(@CurrentAccount Account account, @PathVariable int index,
 			Model model){
-		Account account = null;
-		if(user != null) {
-			account = accountService.getAccountByName(user.getAccount().getUsername());
-			model.addAttribute("account", account);
-		}
+		
+		model.addAttribute("account", account);		
 		Board board = boardService.getBoard(index);
 		model.addAttribute("board", board);
 		model.addAttribute("boardForm", new BoardForm());

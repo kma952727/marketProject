@@ -13,7 +13,8 @@
 		WHERE account_id = #{id}
 	</select>
 	<select id="selectByName" resultType="com.example.demo.model.Account">
-		SELECT account_id, username, password, mail, isEmail_verified as isEmailverified
+		select
+		*
 		FROM account
 		WHERE username = #{username}
 	</select>

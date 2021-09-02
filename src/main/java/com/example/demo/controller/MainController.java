@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.example.demo.config.security.CustomUser;
 import com.example.demo.mapper.AccountMapper;
 import com.example.demo.model.Account;
+import com.example.demo.model.CurrentAccount;
 import com.example.demo.model.Product;
 import com.example.demo.model.ProductImage;
 import com.example.demo.service.AccountService;
@@ -31,16 +32,12 @@ public class MainController {
 	@Autowired ProductService productService;
 	
 	@GetMapping("/")
-	public String main(@AuthenticationPrincipal CustomUser user, Model model) {
-		if(user != null) {
-			Account account = accountService.getAccountByName(user.getAccount().getUsername());
-			model.addAttribute("account", account);
-		}
+	public String main(@CurrentAccount Account currentAccount, Model model) {
+		model.addAttribute("account", currentAccount);
 		List<Product> productList = productService.getProductList(0, "all");
 		
 		model.addAttribute("productList", productList);
 		return "index";
 	}
-	
 
 }

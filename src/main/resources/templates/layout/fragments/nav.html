@@ -24,7 +24,7 @@
 	          			<li class="nav-item" sec:authorize="isAuthenticated()">
 	       					<div class="btn-group">
 							  <button type="button" class="btn btn-primary dropdown-toggle" style="width : 100px;" data-bs-toggle="dropdown" aria-expanded="false">
-							    <div th:text="${account.username}"></div>
+							    <div th:text="${account?.username}"></div>
 							  </button>
 							  <ul class="dropdown-menu">
 							    <li><a class="dropdown-item" th:href="@{/purchase/list}">구매목록</a></li>
@@ -44,7 +44,7 @@
     		</div>
   		</nav>
 		<div sec:authorize="isAuthenticated()" th:if="${!account.isEmailverified}" class="alert alert-danger" role="alert"> 
-			이메일 인증을 완료해주세요.&nbsp;<a th:href="@{'http://localhost:8080/emailSend/'+${account.username}}">다시 전송하기</a>
+			이메일 인증을 완료해주세요.&nbsp;<a th:href="@{'http://localhost:8080/emailSend/'+${account?.username}}">다시 전송하기</a>
 		</div>
 		<script>
 			function clickSearch(){

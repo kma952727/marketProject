@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.config.security.CustomUser;
+import com.example.demo.model.Account;
 import com.example.demo.model.Comment;
+import com.example.demo.model.CurrentAccount;
 import com.example.demo.model.form.CommentForm;
 import com.example.demo.service.CommentService;
 
@@ -22,9 +24,9 @@ public class CommentController {
 	
 	@Autowired CommentService commentService;
 	@PostMapping("/upload")
-	public String uploadComment(@AuthenticationPrincipal CustomUser user, CommentForm commentForm) {
+	public String uploadComment(@CurrentAccount Account account, CommentForm commentForm) {
 		Comment comment = new Comment();
-		comment.setAccountName(user.getAccount().getUsername());
+		comment.setAccountName(account.getUsername());
 		comment.setAccountId(commentForm.getAccountId());
 		comment.setBoardId(commentForm.getBoardId());
 		comment.setContents(commentForm.getContents());
