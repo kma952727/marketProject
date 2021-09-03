@@ -35,8 +35,8 @@ public class MainController {
 	public String main(@CurrentAccount Account currentAccount, Model model) {
 		model.addAttribute("account", currentAccount);
 		List<Product> productList = productService.getProductList(0, "all");
-		
 		model.addAttribute("productList", productList);
+		
 		return "index";
 	}
 

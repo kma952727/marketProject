@@ -43,7 +43,7 @@
 	      		</div>
     		</div>
   		</nav>
-		<div sec:authorize="isAuthenticated()" th:if="${!account.isEmailverified}" class="alert alert-danger" role="alert"> 
+		<div sec:authorize="isAuthenticated()" th:if="${!account?.isEmailverified}" class="alert alert-danger" role="alert"> 
 			이메일 인증을 완료해주세요.&nbsp;<a th:href="@{'http://localhost:8080/emailSend/'+${account?.username}}">다시 전송하기</a>
 		</div>
 		<script>

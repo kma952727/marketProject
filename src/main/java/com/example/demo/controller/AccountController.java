@@ -40,7 +40,7 @@ public class AccountController {
 	}
 	
 	@GetMapping("/signin")
-	public String signin_view(Model model) {
+	public String signinView(Model model) {
 		model.addAttribute("signinForm", new SigninForm());
 		return "signin";
 	}
@@ -72,13 +72,13 @@ public class AccountController {
 		return "redirect:/";
 	}
 	@GetMapping("/emailConfirm")
-	public String email_confirm(String username, String authKey) {
+	public String emailConfirm(String username, String authKey) {
 		log.info("confirm!"+ authKey);
 		accountService.emailConfirm(username, authKey);
 		return "redirect:/";
 	}
 	@GetMapping("/emailSend/{username}")
-	public String email_send(@PathVariable String username,
+	public String emailSend(@PathVariable String username,
 			RedirectAttributes redirectAttributes) throws MessagingException {
 		accountService.email_send(username);
 		redirectAttributes.addAttribute("isSend", "send");

@@ -47,14 +47,14 @@ public class ProductController {
 	@Autowired FileUtils fileUtils;
 	
 	@GetMapping("/upload")
-	public String upload_product_view(@CurrentAccount Account account, Model model) {
+	public String uploadProductView(@CurrentAccount Account account, Model model) {
 		model.addAttribute("account", account);
 		model.addAttribute("productForm",new ProductForm());
 		return "product/product_upload";
 	}
 	
 	@PostMapping("/upload")
-	public String upload_product(@CurrentAccount Account account, 
+	public String uploadProduct(@CurrentAccount Account account, 
 			@RequestParam("file") MultipartFile[] file, ProductForm productForm, 
 			Model model) {
 		model.addAttribute("account", account);
