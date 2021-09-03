@@ -100,6 +100,7 @@ public class ProductController {
 		List<Product> productList = productService.getProductList(index, type);
 		if(!productList.isEmpty())
 			model.addAttribute("productList", productList);
+		log.info(productList.toString());
 		return "index";
 	}
 	@GetMapping("/search/{keyword}")
