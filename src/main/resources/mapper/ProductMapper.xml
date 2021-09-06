@@ -24,7 +24,7 @@
 	</select>
 	
 	<insert id="insertProduct" useGeneratedKeys="true" keyProperty="id" >
-		INSERT into PRODUCT (
+		INSERT into product (
 			name,
 		    price,
 		    type,

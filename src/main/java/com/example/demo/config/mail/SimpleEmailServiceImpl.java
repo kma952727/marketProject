@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Component
 public class SimpleEmailServiceImpl {
 	
@@ -35,6 +38,7 @@ public class SimpleEmailServiceImpl {
 		message.setFrom("FreeMarket");
 		message.setSentDate(new Date());
 		javaMailSender.send(message);
+		log.info("메일전송");
 		return authKey;
 	}
 }

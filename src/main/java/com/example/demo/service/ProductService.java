@@ -32,7 +32,6 @@ public class ProductService {
 		return productList;
 	}
 	public List<Product> getProductList(String keyword){
-		log.info("값+"+keyword);
 		List<Product> productList
 			= productMapper.searchProducts(keyword);
 		return productList;

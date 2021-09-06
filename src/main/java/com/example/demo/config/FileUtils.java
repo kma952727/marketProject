@@ -22,6 +22,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 public class FileUtils {
+	private static final String UPLOADPATH_SERVER = 
+			"/kma95277/tomcat/webapps/product_image/";
 	
 	private static final String UPLOADPATH = "/Users/cat95/Documents/workspace-spring-tool-suite-4-4.10.0.RELEASE"
 			+ "/MarketProject/src/main/resources/static/product_image/";
@@ -50,7 +52,7 @@ public class FileUtils {
 			try {
 				for(MultipartFile image : files) { 
 					ProductImage imageVO = imageList.get(count++);
-					String realPath = imageVO.getServerImageName().replaceAll(DEVELOP_UPLOADPATH, UPLOADPATH);
+					String realPath = imageVO.getServerImageName().replaceAll(DEVELOP_UPLOADPATH, UPLOADPATH_SERVER);
 							
 					byte[] bytes = image.getBytes();
 					File file = new File(realPath);

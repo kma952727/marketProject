@@ -27,7 +27,6 @@ public class SigninFilter extends UsernamePasswordAuthenticationFilter{
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException {
-		log.info("필터등록");
 		return super.attemptAuthentication(request, response);
 	}
 }
