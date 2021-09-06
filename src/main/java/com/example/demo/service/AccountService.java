@@ -7,6 +7,8 @@ import javax.mail.MessagingException;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,14 +47,16 @@ public class AccountService {
 	}
 	public void emailConfirm(String username, String authKey) {
 		String originalKey = accountMapper.selectAuthKey(username);
-		if(originalKey.equals(authKey)) 
+		if(originalKey.equals(authKey)) {
 			accountMapper.IsEmailVerified(username);
+		}
 	}
 
 	public Account email_send(String username) throws MessagingException {
 		String authKey = "";
 		Account account = accountMapper.selectAccountOneColumn("mail_send_time", username);
 		Account mailAccount = new Account();
+		
 		LocalDateTime now = LocalDateTime.now();
 		if(account == null || account.getMailSendTime().plusHours(1).isAfter(LocalDateTime.now())) {
 			authKey = simpleEmailServiceImpl.sendMail("kma952727@gmail.com", username);

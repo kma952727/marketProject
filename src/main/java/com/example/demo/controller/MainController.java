@@ -33,10 +33,11 @@ public class MainController {
 	
 	@GetMapping("/")
 	public String main(@CurrentAccount Account currentAccount, Model model) {
-		model.addAttribute("account", currentAccount);
+		if(currentAccount != null)
+		currentAccount = accountService.getAccountByName(currentAccount.getUsername());
 		List<Product> productList = productService.getProductList(0, "all");
 		model.addAttribute("productList", productList);
-		
+		model.addAttribute("account", currentAccount);
 		return "index";
 	}
 

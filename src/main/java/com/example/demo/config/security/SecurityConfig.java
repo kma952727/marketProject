@@ -36,7 +36,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     public void configure(WebSecurity web) throws Exception
     {
         web.
-        	ignoring().antMatchers("/css/**", "/image/**", "/js/**", "/product_image/**");
+        	ignoring().antMatchers("/css/**", "/image/**", "/js/**", "/product_image/**",
+        			"http://kma95277.cafe24.com/tomcat/webapps/product_image/**");
         	
     }
 	
@@ -46,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.csrf()
 			.and()
 			.authorizeRequests()
-			.antMatchers("/signin","/","/register").permitAll()
+			.antMatchers("/signin","/","/register","/emailConfirm").permitAll()
 			.anyRequest().authenticated();
 		http
 			.formLogin()

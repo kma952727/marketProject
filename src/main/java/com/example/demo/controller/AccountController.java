@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.config.validate.RegisterValidator;
 import com.example.demo.model.Account;
+import com.example.demo.model.CurrentAccount;
 import com.example.demo.model.form.RegisterForm;
 import com.example.demo.model.form.SigninForm;
 import com.example.demo.service.AccountService;
@@ -73,7 +74,6 @@ public class AccountController {
 	}
 	@GetMapping("/emailConfirm")
 	public String emailConfirm(String username, String authKey) {
-		log.info("confirm!"+ authKey);
 		accountService.emailConfirm(username, authKey);
 		return "redirect:/";
 	}
