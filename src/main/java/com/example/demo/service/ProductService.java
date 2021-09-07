@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.config.FileUtils;
+import com.example.demo.file.FileUtils;
 import com.example.demo.mapper.ProductMapper;
 import com.example.demo.model.Product;
 import com.example.demo.model.ProductImage;
@@ -20,7 +20,7 @@ public class ProductService {
 	@Autowired private ProductMapper productMapper;
 	@Autowired private FileUtils fileUtils;
 	
-	public void upload_product(Product product, List<ProductImage> productImages) {
+	public void uploadProduct(Product product, List<ProductImage> productImages) {
 		fileUtils.saveFileToDisk(product.getProductImages(), productImages);
 		productMapper.insertProduct(product);
 		productMapper.insertProductImage(productImages, product.getProductId());

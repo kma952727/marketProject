@@ -54,7 +54,7 @@ public class AccountController {
 	    return "redirect:/";
 	}
 	@GetMapping("/register")
-	public String register_view(Model model) {
+	public String registerView(Model model) {
 		model.addAttribute(new RegisterForm());
 		return "register";
 	}
@@ -80,7 +80,7 @@ public class AccountController {
 	@GetMapping("/emailSend/{username}")
 	public String emailSend(@PathVariable String username,
 			RedirectAttributes redirectAttributes) throws MessagingException {
-		accountService.email_send(username);
+		accountService.emailSend(username);
 		redirectAttributes.addAttribute("isSend", "send");
 		return "redirect:/";
 	}

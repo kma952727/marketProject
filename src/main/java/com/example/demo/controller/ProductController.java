@@ -22,8 +22,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.example.demo.config.FileUtils;
 import com.example.demo.config.security.CustomUser;
+import com.example.demo.file.FileUtils;
 import com.example.demo.model.Account;
 import com.example.demo.model.CurrentAccount;
 import com.example.demo.model.Product;
@@ -72,7 +72,7 @@ public class ProductController {
 				.setAccountId(account.getAccountId())
 				.build();
 		List<ProductImage> productImages = fileUtils.convertImageToModel(file);
-		productService.upload_product(product, productImages);
+		productService.uploadProduct(product, productImages);
 		
 		return "redirect:/";
 	}

@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.demo.config.FileUtils;
 import com.example.demo.config.mail.SimpleEmailServiceImpl;
+import com.example.demo.file.FileUtils;
 import com.example.demo.mapper.AccountMapper;
 import com.example.demo.model.Account;
 import com.example.demo.model.Product;
@@ -41,7 +41,7 @@ public class AccountService {
 	public void register(Account account) throws MessagingException {
 		String username = account.getUsername();
 		String encryPassword = bCryptPasswordEncoder.encode(account.getPassword());
-		Account mailAccount = email_send(username);
+		Account mailAccount = emailSend(username);
 		accountMapper.insert(username, encryPassword, account.getMail(), 
 				mailAccount.getMailSendTime(),mailAccount.getAuthKey());
 	}
@@ -52,7 +52,7 @@ public class AccountService {
 		}
 	}
 
-	public Account email_send(String username) throws MessagingException {
+	public Account emailSend(String username) throws MessagingException {
 		String authKey = "";
 		Account account = accountMapper.selectAccountOneColumn("mail_send_time", username);
 		Account mailAccount = new Account();
