@@ -135,18 +135,23 @@
 	</update>
 	<select id="selectParchase" resultType="com.example.demo.model.Product">
 		select 
-			A.product_id, A.name, C.server_image_name, A.price, A.rating, A.type, A.hits, B.amount
+			* 
 		from 
-			product A 
+			purchase A
 		inner join 
-			purchase B 
+			product B
 		on 
 			A.product_id = B.product_id
-		inner join 
-			product_image C 
+		join 
+			product_image C
 		on 
-			B.product_id = C.product_id 
-		where 
-			A.account_id= #{account_id}
+			B.product_id = C.product_id
+		group by 
+			A.purchase_id 
+		having 
+			A.account_id = #{account_id}
+		order by
+			 A.purchase_id 
+		desc;
 	</select>
 </mapper>
