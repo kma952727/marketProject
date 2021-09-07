@@ -26,7 +26,7 @@ public class SimpleEmailServiceImpl {
 		authKey = mailKeyGenerator.getKey(50, false);
 		String body = "<html>"
 				+ "<body><h1>링크를 클릭해서 인증해주세요.</h1>" +
-				"<a href='http://localhost:8080/emailConfirm?username="
+				"<a href='http://kma95277.cafe24.com/emailConfirm?username="
 				+username+"&authKey="+authKey+"'>인증링크!</a> "
 						+ "<body>"
 						+ "</html>";
