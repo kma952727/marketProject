@@ -9,13 +9,13 @@
 		<div th:each="product : ${productList}">
 		<div class="row border-bottom border-2">	
 			<div class="col-2">
-				<a th:href="@{'/product/'+${product.productId}}"/>
+				<a th:href="@{'/purchase/detail/'+${product.productId}}"/>
 					<img th:src="${product.serverImageName}" width="80">
 				</a>
 			</div>
 			<div class="col-7">	
 				<h5>
-				<a th:href="@{'/product/'+${product.productId}}"/>
+				<a th:href="@{'/purchase/detail/'+${product.productId}}"/>
 					<div class="col" th:text="${product.name}">
 						productName
 					</div>

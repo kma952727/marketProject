@@ -18,6 +18,7 @@ import com.example.demo.model.Product;
 import com.example.demo.model.Purchase;
 import com.example.demo.model.form.PurchaseForm;
 import com.example.demo.service.AccountService;
+import com.example.demo.service.ProductService;
 import com.example.demo.service.PurchaseService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,7 @@ public class PurchaseController {
 	
 	@Autowired AccountService accountService;
 	@Autowired PurchaseService purchasService;
+	@Autowired ProductService productService;
 	
 	@GetMapping("/list")
 	public String purchaseList(@CurrentAccount Account account, Model model) {
@@ -50,8 +52,15 @@ public class PurchaseController {
 		purchasService.purchaseProduct(purchase);
 		return "redirect:/purchase/list";
 	}
-	@GetMapping("/cancel/{productId}")
-	public String cancelPurchase() {
-		return "redirect:list";
+	
+	@GetMapping("/detail/{productId}")
+	public String purchaseView(@CurrentAccount Account account, 
+			@PathVariable int productId, Model model) {
+		Product product = productService.getProduct(productId);
+		String thumbnailImageName = product.getProductImageList().get(0).getServerImageName();
+		model.addAttribute("product",product);
+		model.addAttribute("thumbnailImageName", thumbnailImageName);
+		model.addAttribute("account", account);
+		return "purchase/purchase_detail";
 	}
 }

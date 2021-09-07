@@ -74,7 +74,6 @@ public class BoardController {
 		model.addAttribute("account", account);
 		Board board = boardService.getBoard(index);
 		List<Comment> commentList = commentService.getComment(index);
-		log.info(commentList.toString());
 		model.addAttribute("board", board);
 		model.addAttribute("commentForm", new CommentForm());
 		model.addAttribute("commentList", commentList);

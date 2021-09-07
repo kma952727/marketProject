@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="~{layout/layout.html}">
+
+	<th:block layout:fragment="content">
+		<h4>구매상품</h4>
+		<main>
+    <h1 th:text="${'상품명 : ' + product.name}"></h1>
+    <h5 th:text="${'게시판 번호 : '+ product.productId}"></h5>
+    <div th:text="${'좋아요 : '+ product.like}"></div>
+    <div th:text="${'조회수 : ' + product.hits}"></div>
+    <p class="fs-5 col-md-8"></p>
+    <div>
+    	<img th:src="${thumbnailImageName}" width="400"/>
+    </div> 
+    <div th:if="${product.num > 0}">	    
+	   		<br>
+	   		<div class="mb-5">
+	   			<div>개당 금액 :</div> <input type="text" id="price" 
+	   			class="col fw-bold" th:value=${product.price} style="border: none; background: transparent;" readonly>
+	    	</div>
+    </div>
+    <br>
+    <div class="alert alert-danger" th:if="${product.num < 1}" role="alert">
+  		모두 팔렸습니다!
+	</div>
+    <br>
+    <hr class="col-3 col-md-2 mb-5">
+
+    <div class="row g-5">
+      <div class="col-md-6">
+        <h3>제품 설명</h2>
+        <p th:text="${product.description}"></p>
+      </div>
+    </div>
+    <br>
+    <div class="col-md-6">
+     	<h3>상품 사진</h3>
+     	<div th:each="product : ${product.productImageList}">
+     		<img th:src="${product.serverImageName}" width="200">
+     		<br>
+     	</div>
+    </div>
+  </main>
+	</th:block>
+</html>
