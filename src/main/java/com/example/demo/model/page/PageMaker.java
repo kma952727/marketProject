@@ -28,7 +28,7 @@ public class PageMaker {
 		endPage = (int) Math.ceil((double)criteria.getPageNum() /(double)displayPageNum) * displayPageNum;
 		startPage =  (endPage - displayPageNum) + 1;
 		LastPage = (int) Math.ceil((double)totalCount/(double)displayPageNum);
-		if(endPage > LastPage && endPage - 9 < LastPage) endPage = LastPage;
+		if(endPage > LastPage && endPage - 10 < LastPage) endPage = LastPage;
 		prev = startPage == 1? false : true;
 	}
 }
