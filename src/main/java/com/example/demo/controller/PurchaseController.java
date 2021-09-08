@@ -28,18 +28,25 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class PurchaseController {
 	
+	final static String PURCHASE = "purchase";
+	final static String LIST = "/list";
+	final static String DETAIL = "/detail";
+	final static String PURCHASE_LIST = "/purchase_list";
+	final static String PURCHASE_DETAIL = "/purchase_detail";
+	final static String REDIRECT = "redirect:/";
+	
 	@Autowired AccountService accountService;
 	@Autowired PurchaseService purchasService;
 	@Autowired ProductService productService;
 	
-	@GetMapping("/list")
+	@GetMapping(LIST)
 	public String purchaseList(@CurrentAccount Account account, Model model) {
 		
 		model.addAttribute("account", account);
 		
 		List<Product> productList = purchasService.getPurchaseList(account.getAccountId());
 		model.addAttribute("productList", productList);
-		return "purchase/purchase_list";
+		return PURCHASE + PURCHASE_LIST;
 	}
 	
 	@PostMapping("/{productId}")
@@ -50,10 +57,10 @@ public class PurchaseController {
 		purchase.setProductId(productId);
 		purchase.setAmount(purchaseForm.getAmount());
 		purchasService.purchaseProduct(purchase);
-		return "redirect:/purchase/list";
+		return REDIRECT + PURCHASE + LIST;
 	}
 	
-	@GetMapping("/detail/{productId}")
+	@GetMapping(DETAIL + "/{productId}")
 	public String purchaseView(@CurrentAccount Account account, 
 			@PathVariable int productId, Model model) {
 		Product product = productService.getProduct(productId);
@@ -61,6 +68,6 @@ public class PurchaseController {
 		model.addAttribute("product",product);
 		model.addAttribute("thumbnailImageName", thumbnailImageName);
 		model.addAttribute("account", account);
-		return "purchase/purchase_detail";
+		return PURCHASE + PURCHASE_DETAIL;
 	}
 }

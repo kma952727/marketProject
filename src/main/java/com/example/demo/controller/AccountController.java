@@ -35,6 +35,12 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class AccountController {
 
+	final static String ROOT = "/";
+	final static String SIGNIN = "signin";
+	final static String REGISTER = "register";
+	final static String LOGOUT = "/logout";
+	final static String REDIRECT = "redirect:/";
+	
 	@Autowired private AccountService accountService;
 	@Autowired private RegisterValidator registerValidator;
 	
@@ -43,29 +49,29 @@ public class AccountController {
 		webDataBinder.addValidators(registerValidator);
 	}
 	
-	@GetMapping("/signin")
+	@GetMapping(ROOT + SIGNIN)
 	public String signinView(Model model) {
 		model.addAttribute("signinForm", new SigninForm());
-		return "signin";
+		return "SIGNIN";
 	}
-	@DeleteMapping("/logout")
+	@DeleteMapping(LOGOUT)
 	public String logout(HttpServletRequest request, HttpServletResponse response) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    if (auth != null){    
 	        new SecurityContextLogoutHandler().logout(request, response, auth);
 	    }
-	    return "redirect:/";
+	    return REDIRECT;
 	}
-	@GetMapping("/register")
+	@GetMapping(ROOT + REGISTER)
 	public String registerView(Model model) {
 		model.addAttribute(new RegisterForm());
-		return "register";
+		return REGISTER;
 	}
-	@PostMapping("/register")
+	@PostMapping(ROOT + REGISTER)
 	public String register(@Valid RegisterForm registerForm,
 			BindingResult bindingResult) throws MessagingException {
 		if(bindingResult.hasErrors()) {
-			return "register";
+			return REGISTER;
 		}
 		Account account = new Account.Builder()
 				.setName(registerForm.getName())
@@ -73,6 +79,6 @@ public class AccountController {
 				.setMail(registerForm.getMail())
 				.build();
 		accountService.register(account);
-		return "redirect:/";
+		return REDIRECT;
 	}
 }

@@ -32,12 +32,24 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/board")
 @Controller
 public class BoardController {
+	final static String BOARD = "board";
+	final static String LIST = "/list";
+	final static String UPLOAD = "/upload";
+	final static String DETAIL = "/detail";
+	final static String UPDATE = "/update";
+	final static String DELETE = "/delete";
+	final static String BOARD_LIST = "/board_list";
+	final static String BOARD_UPLOAD = "/board_upload";
+	final static String BOARD_DETAIL = "/board_detail";
+	final static String REDIRECT ="redirect:/";
+	
+	final static String START = "/1";
 	
 	@Autowired AccountService accountService;
 	@Autowired BoardService boardService;
 	@Autowired CommentService commentService;
 	
-	@GetMapping("/list/{index}")
+	@GetMapping(LIST + "/{index}")
 	public String boardListView(@CurrentAccount Account account, Model model
 			, @PathVariable String index) {
 		model.addAttribute("account", account);
@@ -46,16 +58,16 @@ public class BoardController {
 		PageMaker pageMaker = boardService.getPageMaker(criteria);
 		model.addAttribute("pageMaker", pageMaker);
 		model.addAttribute("boardList", boardList);
-		return "board/board_list";
+		return BOARD + BOARD_LIST;
 	}
 	
-	@GetMapping("/upload")
+	@GetMapping(UPLOAD)
 	public String uploadBoardView(@CurrentAccount Account account, Model model) {
 		model.addAttribute("account", account);
 		model.addAttribute("boardForm", new BoardForm());
-		return "board/board_upload";
+		return BOARD + BOARD_UPLOAD;
 	}
-	@PostMapping("/upload")
+	@PostMapping(UPLOAD)
 	public String uploadBoard(@CurrentAccount Account account, Model model, BoardForm boardForm) {
 		model.addAttribute("account", account);
 
@@ -66,10 +78,10 @@ public class BoardController {
 		board.setContents(boardForm.getContents());
 		board.setUploadTime(LocalDateTime.now());
 		boardService.uploadBoard(board);
-		return "redirect:/board/list/1";
+		return REDIRECT + BOARD + LIST + START;
 	}
 	
-	@GetMapping("/detail/{index}")
+	@GetMapping(DETAIL + "/{index}")
 	public String boardDetailView(@CurrentAccount Account account, 
 			@PathVariable int index, Model model) {
 		model.addAttribute("account", account);
@@ -79,14 +91,14 @@ public class BoardController {
 		model.addAttribute("commentForm", new CommentForm());
 		model.addAttribute("commentList", commentList);
 		model.addAttribute("account", account);
-		return "board/board_detail";
+		return BOARD + BOARD_DETAIL;
 	}
-	@DeleteMapping("/delete/{index}")
+	@DeleteMapping(DELETE + "/{index}")
 	public String deleteBoard(@PathVariable int index) {
 		boardService.deleteBoard(index);
-		return "redirect:/board/list/1";
+		return REDIRECT + BOARD + LIST + START;
 	}
-	@GetMapping("/update/{index}")
+	@GetMapping(UPDATE + "/{index}")
 	public String updateBoard(@CurrentAccount Account account, @PathVariable int index,
 			Model model){
 		
@@ -94,6 +106,6 @@ public class BoardController {
 		Board board = boardService.getBoard(index);
 		model.addAttribute("board", board);
 		model.addAttribute("boardForm", new BoardForm());
-		return "board/board_upload";
+		return BOARD + BOARD_UPLOAD;
 	}
 }

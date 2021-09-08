@@ -21,9 +21,15 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/comment")
 public class CommentController {
+	final static String ROOT = "/";
+	final static String BOARD = "board";
+	final static String UPLOAD = "/upload";
+	final static String DETAIL = "/detail";
+	final static String REDIRECT ="redirect:/";
 	
 	@Autowired CommentService commentService;
-	@PostMapping("/upload")
+	
+	@PostMapping(UPLOAD)
 	public String uploadComment(@CurrentAccount Account account, CommentForm commentForm) {
 		Comment comment = new Comment();
 		comment.setAccountName(account.getUsername());
@@ -32,6 +38,6 @@ public class CommentController {
 		comment.setContents(commentForm.getContents());
 		comment.setUploadTime(LocalDateTime.now());
 		commentService.uploadComment(comment);
-		return "redirect:/board/detail/"+commentForm.getBoardId();
+		return REDIRECT + BOARD + DETAIL + ROOT + commentForm.getBoardId();
 	}
 }

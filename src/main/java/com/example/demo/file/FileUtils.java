@@ -24,7 +24,6 @@ import lombok.extern.slf4j.Slf4j;
 public class FileUtils {
 	private static final String UPLOADPATH_SERVER = 
 			"/kma95277/tomcat/webapps/product_image/";
-	
 	private static final String UPLOADPATH = "/Users/cat95/Documents/workspace-spring-tool-suite-4-4.10.0.RELEASE"
 			+ "/MarketProject/src/main/resources/static/product_image/";
 	private static final String DEVELOP_UPLOADPATH="/product_image/";

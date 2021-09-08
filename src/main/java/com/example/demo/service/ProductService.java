@@ -16,7 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Transactional
 public class ProductService {
-
+	
+	final static String TRUE = "y";
+	
 	@Autowired private ProductMapper productMapper;
 	@Autowired private FileUtils fileUtils;
 	
@@ -48,7 +50,7 @@ public class ProductService {
 
 	public boolean likeProduct(Long accountId, int index) {
 		String alreayLike = isExistsProductLike(accountId, index);
-		if(alreayLike.equals("y")) {
+		if(alreayLike.equals(TRUE)) {
 			productMapper.updateProductLike(accountId, index);
 			return true;
 		}

@@ -17,7 +17,6 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class SimpleEmailServiceImpl {
 	
-	
 	@Autowired private JavaMailSender javaMailSender;
 	@Autowired private MailKeyGenerator mailKeyGenerator;
 	private String authKey;
@@ -38,7 +37,6 @@ public class SimpleEmailServiceImpl {
 		message.setFrom("FreeMarket");
 		message.setSentDate(new Date());
 		javaMailSender.send(message);
-		log.info("메일전송");
 		return authKey;
 	}
 }

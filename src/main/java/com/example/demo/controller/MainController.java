@@ -28,17 +28,22 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class MainController {
 
-	@Autowired AccountService accountService;
-	@Autowired ProductService productService;
+	final static int START_PAGE = 0;
+	final static String ROOT = "/";
+	final static String INDEX = "index";
+	final static String ALL = "all";
+
+	@Autowired private AccountService accountService;
+	@Autowired private ProductService productService;
 	
-	@GetMapping("/")
+	@GetMapping(ROOT)
 	public String main(@CurrentAccount Account currentAccount, Model model) {
 		if(currentAccount != null)
 		currentAccount = accountService.getAccountByName(currentAccount.getUsername());
-		List<Product> productList = productService.getProductList(0, "all");
+		List<Product> productList = productService.getProductList(START_PAGE, ALL);
 		model.addAttribute("productList", productList);
 		model.addAttribute("account", currentAccount);
-		return "index";
+		return INDEX;
 	}
 
 }

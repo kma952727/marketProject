@@ -18,18 +18,21 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/email")
 public class EmailController {
 	
+	final static String CONFIRM = "/confirm";
+	final static String SEND = "/send";
+	final static String REDIRECT = "redirect:/";
 	@Autowired private AccountService accountService;
 	
-	@GetMapping("/confirm")
+	@GetMapping(CONFIRM)
 	public String emailConfirm(String username, String authKey) {
 		accountService.emailConfirm(username, authKey);
-		return "redirect:/";
+		return REDIRECT;
 	}
-	@GetMapping("/send/{username}")
+	@GetMapping(SEND + "/{username}")
 	public String emailSend(@PathVariable String username,
 			RedirectAttributes redirectAttributes) throws MessagingException {
 		accountService.emailSend(username);
 		redirectAttributes.addAttribute("isSend", "send");
-		return "redirect:/";
+		return REDIRECT;
 	}
 }

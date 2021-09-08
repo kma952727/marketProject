@@ -43,18 +43,29 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/product")
 public class ProductController {
 	
+	final static String ROOT = "/";
+	final static String INDEX = "index";
+	final static String PRODUCT = "product";
+	final static String UPLOAD = "/upload";
+	final static String CATEGORI = "/categori";
+	final static String LIKE = "/like";
+	final static String SEARCH = "/search";
+	final static String PRODUCT_UPLOAD = "/product_upload";
+	final static String PRODUCT_DETAIL = "/product_detail";
+	final static String REDIRECT = "redirect:/";
+	
 	@Autowired AccountService accountService;
 	@Autowired ProductService productService;
 	@Autowired FileUtils fileUtils;
 	
-	@GetMapping("/upload")
+	@GetMapping(UPLOAD)
 	public String uploadProductView(@CurrentAccount Account account, Model model) {
 		model.addAttribute("account", account);
 		model.addAttribute("productForm",new ProductForm());
-		return "product/product_upload";
+		return PRODUCT + PRODUCT_UPLOAD;
 	}
 	
-	@PostMapping("/upload")
+	@PostMapping(UPLOAD)
 	public String uploadProduct(@CurrentAccount Account account, 
 			@RequestParam("file") MultipartFile[] file, ProductForm productForm, 
 			Model model) {
@@ -75,7 +86,7 @@ public class ProductController {
 		List<ProductImage> productImages = fileUtils.convertImageToModel(file);
 		productService.uploadProduct(product, productImages);
 		
-		return "redirect:/";
+		return REDIRECT;
 	}
 	
 	@GetMapping("/{productId}")
@@ -90,10 +101,10 @@ public class ProductController {
 		model.addAttribute("product",product);
 		model.addAttribute("thumbnailImageName", thumbnailImageName);
 		model.addAttribute("purchaseForm", new PurchaseForm());
-		return "product/product_detail";
+		return PRODUCT + PRODUCT_DETAIL;
 	}
 	
-	@GetMapping("/categori/{type}/{index}")
+	@GetMapping(CATEGORI + "/{type}/{index}")
 	public String categoriView(@CurrentAccount Account account, Model model,
 			@PathVariable String type, @PathVariable Integer index) {
 		model.addAttribute("account", account);
@@ -101,9 +112,10 @@ public class ProductController {
 		List<Product> productList = productService.getProductList(index, type);
 		if(!productList.isEmpty())
 			model.addAttribute("productList", productList);
-		return "index";
+		return INDEX;
 	}
-	@GetMapping("/categori/search/{keyword}")
+	
+	@GetMapping(CATEGORI + SEARCH + "/{keyword}")
 	public String categoriSearch(@CurrentAccount Account account, Model model,
 			@PathVariable String keyword) {
 		model.addAttribute("account", account);
@@ -111,20 +123,20 @@ public class ProductController {
 		List<Product> productList = productService.getProductList(keyword);
 		model.addAttribute("productList", productList);
 		log.info(productList.toString());
-		return "index";
+		return INDEX;
 	}
 	
-	@PutMapping("/like/{index}")
+	@PutMapping(LIKE + "/{index}")
 	public String likeProduct(@CurrentAccount Account account, @PathVariable int index,
 			RedirectAttributes redirectAttributes) {
 		boolean isSuccess = productService.likeProduct(account.getAccountId(), index);
 		if(!isSuccess)
 			redirectAttributes.addFlashAttribute("isLikeSuccess", false);
 			
-		return "redirect:/product/"+index;
+		return REDIRECT + PRODUCT + ROOT + index;
 	}
 	private LocalDateTime StringToDate(String StringDate) {
-		String[] imageNames =  StringDate.split("/");
+		String[] imageNames =  StringDate.split(ROOT);
 		LocalDateTime endTime = 
 				LocalDateTime.of(Integer.parseInt(imageNames[0]),
 						Integer.parseInt(imageNames[1]), Integer.parseInt(imageNames[2]), 0, 0, 0);
