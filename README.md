@@ -53,6 +53,11 @@
 - git 한브랜치에 모두 작성하지 않고 main, develop, feature, hotfix, refactor 브랜치활용하기 
 
 ---------------
+### 사이트
+  
+http://kma95277.cafe24.com/
+  
+---------------
 ### ERD
 
 <img width="792" alt="market_project_ERD" src="https://user-images.githubusercontent.com/80996897/131788732-80134206-e7e0-4497-a734-282abfb3f067.png">
