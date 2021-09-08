@@ -17,9 +17,12 @@
 			</a>
 		</div>
 		<div class="col">
-			<a th:href="@{'/board/delete/'+${board.boardId}}" th:if="${account?.accountId == board.accountId}">
-				<button type="button" class="btn btn-danger">삭제</button>
-			</a>
+			<form th:action="@{'/board/delete/'+ ${board.boardId}}" method="post">
+				<a th:if="${account?.accountId == board.accountId}">
+					<input type="hidden" name="_method" value="delete">
+					<button type="submit" class="btn btn-danger">삭제</button>
+				</a>
+			</form>
 		</div>		
 	</div>
 	<hr>

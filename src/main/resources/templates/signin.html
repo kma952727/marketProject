@@ -12,7 +12,7 @@
 	        <div th:if="${param.error}" class="alert alert-primary" role="alert">
 	        	 잘못된 시도입니다.
 	        </div>
-	        <form th:action="@{/signin}" method="post" th:object="${signinForm}">
+	        <form th:action="@{/account/signin}" method="post" th:object="${signinForm}">
 	       		<div>
 				    <label for="exampleInputEmail1" class="form-label">아이디</label>
 				    <input type="text" class="form-control" name="username" th:field="*{username}"

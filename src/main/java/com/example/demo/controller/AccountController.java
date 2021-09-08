@@ -13,10 +13,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.config.validate.RegisterValidator;
@@ -29,6 +31,7 @@ import com.example.demo.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
+@RequestMapping("/account")
 @Controller
 public class AccountController {
 
@@ -45,7 +48,7 @@ public class AccountController {
 		model.addAttribute("signinForm", new SigninForm());
 		return "signin";
 	}
-	@GetMapping("/logout")
+	@DeleteMapping("/logout")
 	public String logout(HttpServletRequest request, HttpServletResponse response) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    if (auth != null){    
@@ -70,18 +73,6 @@ public class AccountController {
 				.setMail(registerForm.getMail())
 				.build();
 		accountService.register(account);
-		return "redirect:/";
-	}
-	@GetMapping("/emailConfirm")
-	public String emailConfirm(String username, String authKey) {
-		accountService.emailConfirm(username, authKey);
-		return "redirect:/";
-	}
-	@GetMapping("/emailSend/{username}")
-	public String emailSend(@PathVariable String username,
-			RedirectAttributes redirectAttributes) throws MessagingException {
-		accountService.emailSend(username);
-		redirectAttributes.addAttribute("isSend", "send");
 		return "redirect:/";
 	}
 }

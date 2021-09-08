@@ -47,11 +47,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.csrf()
 			.and()
 			.authorizeRequests()
-			.antMatchers("/signin","/","/register","/emailConfirm").permitAll()
+			.antMatchers("/account/signin", "/" 
+					,"/account/register", "/email/confirm").permitAll()
 			.anyRequest().authenticated();
 		http
 			.formLogin()
-			.loginPage("/signin")
+			.loginPage("/account/signin")
 			.successHandler(successHandler());
 		http
 			.logout()

@@ -18,7 +18,7 @@
 	       			<ul class="navbar-nav me-auto mb-2 mb-md-0">
 	          			<li class="nav-item">
 	            			<a class="nav-link active" aria-current="page" sec:authorize="isAnonymous()" 
-	            				href="/signin">로그인</a>
+	            				href="/account/signin">로그인</a>
 	          			</li>
 	          			&nbsp;
 	          			<li class="nav-item" sec:authorize="isAuthenticated()">
@@ -31,20 +31,23 @@
 							    <li><a class="dropdown-item" th:href="@{/product/upload}">상품올리기</a></li>
 							    <li><hr class="dropdown-divider"></li>
 							    <li>
-							    	<a class="dropdown-item" th:href="@{/logout}">로그아웃</a>
+							    	<form th:action="@{/account/logout}" method="post">
+							    		<input type="hidden" name="_method" value="delete">
+							    		<input type="submit" class="dropdown-item" value="로그아웃">
+							    	</form>
 							    </li>
 							  </ul>
 							</div>
 	       				</li>
 	          			<li class="nav-item" sec:authorize="isAnonymous()">
-	            			<a class="nav-link" href="/register">회원가입</a>
+	            			<a class="nav-link" href="/account/register">회원가입</a>
 	          			</li> 
 	        		</ul>
 	      		</div>
     		</div>
   		</nav>
 		<div sec:authorize="isAuthenticated()" th:if="${!account?.isEmailverified}" class="alert alert-danger" role="alert"> 
-			이메일 인증을 완료해주세요.&nbsp;<a th:href="@{'http://localhost:8080/emailSend/'+${account?.username}}">다시 전송하기</a>
+			이메일 인증을 완료해주세요.&nbsp;<a th:href="@{'http://localhost:8080/email/send/'+${account?.username}}">다시 전송하기</a>
 		</div>
 		<script>
 			function clickSearch(){
@@ -53,7 +56,7 @@
 					const PATTERN = /[~!@#$%^&*()_+|<>?:{}/\s/g]/;
 					searchValue = searchValue.trim();
 					if(!PATTERN.test(searchValue))
-						location.href="http://kma95277.cafe24.com/product/search/"+searchValue;
+						location.href="http://kma95277.cafe24.com/product/categori/search/"+searchValue;
 					else
 						alert("특수문자, 공백을 제거해주세요.");					
 				}

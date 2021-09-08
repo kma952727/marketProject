@@ -15,13 +15,6 @@
     </div> 
     <div th:if="${product.num > 0}">
 	    <form th:object="${purchaseForm}" th:action="'/purchase/'+${product.productId}" method="post">
-	    <div class="mb-5">
-	    	<button type="submit" class="btn btn-primary btn-lg px-4">구매 하기</button>
-	    	<a th:href="@{'/product/like/' + ${productId}}" class="btn btn-success btn-lg px-4">좋아요</a>
-	    </div>
-	    <div th:if="${isLikeSuccess == false}"class="alert alert-danger" role="alert">
-			`좋아요`는 한 번만 하실 수 있습니다.
-		</div>
 	 		<div class="col-1">
 	  			<input type="text" class="form-control" 
 	  				th:name="amount" id="amount" value="1">
@@ -33,7 +26,19 @@
 	   			<div>총 금액 :</div> <input type="text" id="price" 
 	   			class="col fw-bold" th:value=${product.price} style="border: none; background: transparent;" readonly>
 	    	</div>
+	    	
+	    	<button type="submit" class="btn btn-primary btn-lg px-4">구매 하기</button>
 	    </form>
+	    <br>
+	    <form th:action="@{'/product/like/' + ${productId}}" method="post">
+	    	<input type="hidden" name="_method" value="put">
+		    <input type="submit" class="btn btn-success btn-lg px-4" value="좋아요">
+	    </form>
+	    
+	    <br>
+	    <div th:if="${isLikeSuccess == false}"class="alert alert-danger" role="alert">
+			`좋아요`는 한 번만 하실 수 있습니다.
+		</div>
     </div>
     <br>
     <div class="alert alert-danger" th:if="${product.num < 1}" role="alert">
@@ -85,6 +90,8 @@
 				parseInt(document.getElementById('price').value) - parseInt(price);
 		}
 	}
+	
+	
   </script>
 </th:block>
 </html>

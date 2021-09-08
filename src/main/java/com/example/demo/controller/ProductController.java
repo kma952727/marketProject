@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -100,10 +101,9 @@ public class ProductController {
 		List<Product> productList = productService.getProductList(index, type);
 		if(!productList.isEmpty())
 			model.addAttribute("productList", productList);
-		log.info(productList.toString());
 		return "index";
 	}
-	@GetMapping("/search/{keyword}")
+	@GetMapping("/categori/search/{keyword}")
 	public String categoriSearch(@CurrentAccount Account account, Model model,
 			@PathVariable String keyword) {
 		model.addAttribute("account", account);
@@ -114,7 +114,7 @@ public class ProductController {
 		return "index";
 	}
 	
-	@GetMapping("/like/{index}")
+	@PutMapping("/like/{index}")
 	public String likeProduct(@CurrentAccount Account account, @PathVariable int index,
 			RedirectAttributes redirectAttributes) {
 		boolean isSuccess = productService.likeProduct(account.getAccountId(), index);
