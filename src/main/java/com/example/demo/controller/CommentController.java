@@ -17,10 +17,17 @@ import com.example.demo.service.CommentService;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * 자유 게시판 댓글 업로드기능을 위한 url이
+ * 맵핑된 컨트롤입니다.
+ * 
+ * @author cat95
+ */
 @Slf4j
 @Controller
 @RequestMapping("/comment")
 public class CommentController {
+	
 	final static String ROOT = "/";
 	final static String BOARD = "board";
 	final static String UPLOAD = "/upload";

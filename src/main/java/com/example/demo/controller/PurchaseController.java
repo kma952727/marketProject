@@ -23,6 +23,12 @@ import com.example.demo.service.PurchaseService;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * 구매목록 조회를 위한 url이
+ * 맵핑된 컨트롤러입니다.
+ * 
+ * @author cat95
+ */
 @Slf4j
 @RequestMapping("/purchase")
 @Controller
@@ -42,20 +48,29 @@ public class PurchaseController {
 	@GetMapping(LIST)
 	public String purchaseList(@CurrentAccount Account account, Model model) {
 		
-		model.addAttribute("account", account);
-		
 		List<Product> productList = purchasService.getPurchaseList(account.getAccountId());
 		model.addAttribute("productList", productList);
+		model.addAttribute("account", account);
 		return PURCHASE + PURCHASE_LIST;
 	}
 	
+	/**
+	 * 상품구매기능입니다.
+	 * 
+	 * @param account
+	 * @param purchaseForm
+	 * @param productId 구매하고싶은 상품의 id값입니다.
+	 * @return
+	 */
 	@PostMapping("/{productId}")
 	public String purchase(@CurrentAccount Account account, PurchaseForm purchaseForm
 			,@PathVariable int productId) {
+		
 		Purchase purchase = new Purchase();
 		purchase.setAccountId(account.getAccountId());
-		purchase.setProductId(productId);
 		purchase.setAmount(purchaseForm.getAmount());
+		purchase.setProductId(productId);
+		
 		purchasService.purchaseProduct(purchase);
 		return REDIRECT + PURCHASE + LIST;
 	}
@@ -65,8 +80,9 @@ public class PurchaseController {
 			@PathVariable int productId, Model model) {
 		Product product = productService.getProduct(productId);
 		String thumbnailImageName = product.getProductImageList().get(0).getServerImageName();
-		model.addAttribute("product",product);
+		
 		model.addAttribute("thumbnailImageName", thumbnailImageName);
+		model.addAttribute("product",product);
 		model.addAttribute("account", account);
 		return PURCHASE + PURCHASE_DETAIL;
 	}

@@ -30,6 +30,13 @@ import com.example.demo.service.AccountService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+/**
+ * 회원가입, 로그인, 로그아웃처리를 위한 url이
+ * 맵핑된 컨트롤러입니다.
+ * 
+ * @author cat95
+ */
 @Slf4j
 @RequestMapping("/account")
 @Controller
@@ -54,25 +61,28 @@ public class AccountController {
 		model.addAttribute("signinForm", new SigninForm());
 		return "SIGNIN";
 	}
+	
 	@DeleteMapping(LOGOUT)
 	public String logout(HttpServletRequest request, HttpServletResponse response) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	    if (auth != null){    
+	    if (auth != null)
 	        new SecurityContextLogoutHandler().logout(request, response, auth);
-	    }
+	    
 	    return REDIRECT;
 	}
+	
 	@GetMapping(ROOT + REGISTER)
 	public String registerView(Model model) {
 		model.addAttribute(new RegisterForm());
 		return REGISTER;
 	}
+	
 	@PostMapping(ROOT + REGISTER)
 	public String register(@Valid RegisterForm registerForm,
 			BindingResult bindingResult) throws MessagingException {
-		if(bindingResult.hasErrors()) {
-			return REGISTER;
-		}
+		
+		if(bindingResult.hasErrors()) return REGISTER;
+		
 		Account account = new Account.Builder()
 				.setName(registerForm.getName())
 				.setPassword(registerForm.getPassword())

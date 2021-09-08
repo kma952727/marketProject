@@ -17,12 +17,14 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 public class ProductService {
 	
+	//'좋아요'기능 사용을 위한 조건에서 사용됩니다.
 	final static String TRUE = "y";
 	
 	@Autowired private ProductMapper productMapper;
 	@Autowired private FileUtils fileUtils;
 	
 	public void uploadProduct(Product product, List<ProductImage> productImages) {
+		//로컬, 서버에 파일을 저장합니다.
 		fileUtils.saveFileToDisk(product.getProductImages(), productImages);
 		productMapper.insertProduct(product);
 		productMapper.insertProductImage(productImages, product.getProductId());
@@ -47,8 +49,9 @@ public class ProductService {
 		productMapper.countHits(productId);
 		
 	}
-
+	
 	public boolean likeProduct(Long accountId, int index) {
+		//좋아요 기능을 사용할수있으면 'y'값이 할당됩니다.
 		String alreayLike = isExistsProductLike(accountId, index);
 		if(alreayLike.equals(TRUE)) {
 			productMapper.updateProductLike(accountId, index);

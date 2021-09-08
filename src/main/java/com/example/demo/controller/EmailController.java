@@ -13,6 +13,13 @@ import com.example.demo.service.AccountService;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * 이메일 확인, 전송기능을 위한 url이
+ * 맵핑된 컨트롤러 입니다.
+ * 
+ * 
+ * @author cat95
+ */
 @Slf4j
 @Controller
 @RequestMapping("/email")
@@ -23,6 +30,13 @@ public class EmailController {
 	final static String REDIRECT = "redirect:/";
 	@Autowired private AccountService accountService;
 	
+	/**
+	 * 두개의 파라미터 'username'에 해당하는 테이블의 'auth_key' 컬럼값과 authKey이 매칭이되는지 확인합니다.
+	 * 
+	 * @param username 인증메일에 담긴 유저이름입니다.
+	 * @param authKey 인증메일에 담긴 인증값입니다.
+	 * @return
+	 */
 	@GetMapping(CONFIRM)
 	public String emailConfirm(String username, String authKey) {
 		accountService.emailConfirm(username, authKey);

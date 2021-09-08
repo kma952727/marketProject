@@ -28,6 +28,12 @@ import com.example.demo.service.CommentService;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * 자유 게시판 조회, 업로드, 삭제, 수정기능을 위한 url이
+ * 맵핑된 컨트롤러입니다. 
+ * 
+ * @author cat95
+ */
 @Slf4j
 @RequestMapping("/board")
 @Controller
@@ -52,25 +58,29 @@ public class BoardController {
 	@GetMapping(LIST + "/{index}")
 	public String boardListView(@CurrentAccount Account account, Model model
 			, @PathVariable String index) {
-		model.addAttribute("account", account);
+		
 		Criteria criteria = new Criteria(Integer.parseInt(index));
-		List<Board> boardList = boardService.getBoardList(criteria);
 		PageMaker pageMaker = boardService.getPageMaker(criteria);
+		List<Board> boardList = boardService.getBoardList(criteria);
+		
+		model.addAttribute("account", account);
 		model.addAttribute("pageMaker", pageMaker);
 		model.addAttribute("boardList", boardList);
+		
 		return BOARD + BOARD_LIST;
 	}
 	
 	@GetMapping(UPLOAD)
 	public String uploadBoardView(@CurrentAccount Account account, Model model) {
+		
 		model.addAttribute("account", account);
 		model.addAttribute("boardForm", new BoardForm());
 		return BOARD + BOARD_UPLOAD;
 	}
+	
 	@PostMapping(UPLOAD)
 	public String uploadBoard(@CurrentAccount Account account, Model model, BoardForm boardForm) {
-		model.addAttribute("account", account);
-
+		
 		Board board = new Board();
 		board.setAccountId(account.getAccountId());
 		board.setWriter(account.getUsername());
@@ -78,34 +88,42 @@ public class BoardController {
 		board.setContents(boardForm.getContents());
 		board.setUploadTime(LocalDateTime.now());
 		boardService.uploadBoard(board);
+		
+		model.addAttribute("account", account);
 		return REDIRECT + BOARD + LIST + START;
 	}
 	
 	@GetMapping(DETAIL + "/{index}")
 	public String boardDetailView(@CurrentAccount Account account, 
 			@PathVariable int index, Model model) {
-		model.addAttribute("account", account);
+		
 		Board board = boardService.getBoard(index);
 		List<Comment> commentList = commentService.getComment(index);
+		
+		model.addAttribute("account", account);
 		model.addAttribute("board", board);
 		model.addAttribute("commentForm", new CommentForm());
 		model.addAttribute("commentList", commentList);
 		model.addAttribute("account", account);
+		
 		return BOARD + BOARD_DETAIL;
 	}
+	
 	@DeleteMapping(DELETE + "/{index}")
 	public String deleteBoard(@PathVariable int index) {
 		boardService.deleteBoard(index);
 		return REDIRECT + BOARD + LIST + START;
 	}
+	
 	@GetMapping(UPDATE + "/{index}")
 	public String updateBoard(@CurrentAccount Account account, @PathVariable int index,
 			Model model){
-		
-		model.addAttribute("account", account);		
+				
 		Board board = boardService.getBoard(index);
-		model.addAttribute("board", board);
+		
 		model.addAttribute("boardForm", new BoardForm());
+		model.addAttribute("account", account);
+		model.addAttribute("board", board);
 		return BOARD + BOARD_UPLOAD;
 	}
 }

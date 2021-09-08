@@ -20,7 +20,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider{
 	@Autowired private UserDetailServiceImpl userDetailServiceImpl;
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-		log.info("값+"+authentication.getPrincipal());
 		String name = (String)authentication.getPrincipal();
 		String password = (String)authentication.getCredentials();
 		CustomUser user = (CustomUser) userDetailServiceImpl.loadUserByUsername(name);
