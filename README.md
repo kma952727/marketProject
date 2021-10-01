@@ -2,7 +2,8 @@
 
 ### 연락처
 
-1.메일 : kangmins9527@gmail.com
+1.메일 : kangmins9527@gmail.com  
+2.블로그 : https://dogg.tistory.com
 
 ### 개요
 1.인원 : 1명
